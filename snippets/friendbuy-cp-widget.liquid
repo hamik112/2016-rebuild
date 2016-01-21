@@ -1,0 +1,15 @@
+<div id="friendbuy_widget"></div>
+<script type="text/javascript">
+var _frnd = {
+    site: "site-9c31321c-host",
+    page: "{{ page }}",
+    purchase_tracker_site: "https://pt.friendbuy.com",
+    embed_site: "https://embed.friendbuy.com"
+};
+(function(d, l, s) {
+    var a, b = d.getElementsByTagName(s)[0];
+    a = d.createElement(s);a.type = 'text/javascript';a.async = true;
+    a.src = l.protocol + '//djnf6e5yyirys.cloudfront.net/js/frndby.js';
+    b.parentNode.insertBefore(a, b);
+})(document, location, 'script');
+</script>

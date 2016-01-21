@@ -1,0 +1,65 @@
+<div id="home-twitter-carousel" class="home-module-wrapper {{ settings.home-twitter-carousel-style }} {% if settings.home-twitter-carousel-borders %}borders{% endif %}"> 
+  <div class="home-twitter-carousel-bg" ></div>
+  <div class="home-module home-twitter-carousel-features">
+  
+    {% if settings.home-show-twitter-carousel %}
+    <div class="home-twitter-carousel-feature clearfix media-aligned-{{settings.home-twitter-carousel-media-alignment}}">
+
+      <div class="home-twitter-carousel-content">
+        
+    	<div class="home-twitter-carousel-text {{ settings.home-twitter-carousel-media-alignment }}">
+          {% if settings.home-twitter-carousel-title.size > 0 %}
+            <h2>{{ settings.home-twitter-carousel-title }}</h2>
+            <h3>{{ settings.home-twitter-carousel-title-2 }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.home-twitter-carousel-text }}
+          </div>
+        </div>
+        
+        <div class="home-twitter-carousel-media">
+          
+          <div id="testy2" class="home-slideshow-wrapper">
+            <div class="home-slideshow-loader"></div>
+            <div class="home-slideshow-navigation home-slideshow-previous icon">&#57352;</div>
+            <div class="home-slideshow-navigation home-slideshow-next icon">&#57353;</div>
+            <div class="home-slideshow-pagination home-slideshow-c-pagination">
+              {% for product in collections.frontpage.products limit:9 %}
+              <span data-slide-id="home-slide-c-{{ forloop.index }}" class="pagination-slide pagination-slide-{{ forloop.index }}"><span></span></span>
+              {% endfor %}
+            </div>
+            <div id="home-slideshow-c" class="home-slideshow">
+              {% for product in collections.frontpage.products limit:9 %}
+              <div id="home-slide-c-{{ forloop.index }}" class="home-slide home-slide-c-{{ forloop.index }}" >
+             
+                <div class="slide-twitter" id="slide-twitter-{{ forloop.index }}" data-slide-position="{{ forloop.index }}" data-tweet-url="https://twitter.com/taste4wines/status/670704400093065217"></div>
+                
+                <script>
+                var url='https://twitter.com/taste4wines/status/670704400093065217';
+                $.ajax({
+                  url: "https://api.twitter.com/1/statuses/oembed.json?url="+url,
+                  dataType: "jsonp",
+                  async: false,
+                  success: function(data){
+                    console.log(data.html);
+                    $('#slide-twitter-'+{{ forloop.index }}).html(data.html); 
+                  }
+                });
+                </script>
+                
+              </div>
+              {% else %}
+              <img class="product-no-images" src="{{ 'no-image.svg' | asset_url }}" alt="No Image Available" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;" />
+              {% endfor %}
+            </div>
+          </div>
+          
+        </div>
+          
+      </div>
+        
+    </div>
+    {% endif %}
+    
+  </div>
+</div>

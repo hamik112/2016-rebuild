@@ -1,0 +1,202 @@
+<div id="home-in-line-two" class="home-module-wrapper in-line-features-two-wrapper {{ settings.home-in-line-two-style }}">
+  <div class="home-module home-in-line-features">
+    {% if settings.home-in-line-two-heading.size > 0 %}
+      <h3 class="section-title">{{ settings.home-in-line-two-heading }}<span class="tasticon-headarrow-r"></span></h3>
+    {% else %}
+      {% unless settings.home-show-in-line-two-1 or settings.home-show-in-line-two-2 or settings.home-show-in-line-two-3 or settings.home-show-in-line-two-4 or settings.home-show-in-line-two-5 or settings.home-show-in-line-two-6 %}
+        <h3 class="section-title">{{ 'onboarding.inline_features_section.section_title' | t }}</h3>
+      {% endunless %}
+    {% endif %}
+
+    {% if settings.home-show-in-line-two-1 %}
+    <div class="home-in-line-feature clearfix">
+
+      {% if settings.home-show-in-line-two-images %}
+        <img alt="{{ settings.home-in-line-two-1-title | strip_html | escape }}" src="{{ 'home-in-line-two-image-1.png' | asset_url }}">
+      {% endif %}
+
+      <div class="home-in-line-text">
+        {% if settings.home-in-line-two-1-title.size > 0 %}
+          <h3>{{ settings.home-in-line-two-1-title }}</h3>
+        {% endif %}
+
+        {% if settings.home-in-line-two-1-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-in-line-two-1-text }}
+        </div>
+        {% endif %}
+
+        {% if settings.home-in-line-two-1-url.size > 0 and settings.home-in-line-two-1-cta.size > 0 %}
+        <p class="home-in-line-cta"><a href="{{ settings.home-in-line-two-1-url }}">{{ settings.home-in-line-two-1-cta }}<span class="tasticon-cta"></span></a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-in-line-two-2 %}
+    <div class="home-in-line-feature clearfix">
+
+      {% if settings.home-show-in-line-two-images %}
+        <img alt="{{ settings.home-in-line-two-2-title | strip_html | escape }}" src="{{ 'home-in-line-two-image-2.png' | asset_url }}">
+      {% endif %}
+
+      <div class="home-in-line-text">
+        {% if settings.home-in-line-two-2-title.size > 0 %}
+          <h3>{{ settings.home-in-line-two-2-title }}</h3>
+        {% endif %}
+
+        {% if settings.home-in-line-two-2-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-in-line-two-2-text }}
+        </div>
+        {% endif %}
+
+        {% if settings.home-in-line-two-2-url.size > 0 and settings.home-in-line-two-2-cta.size > 0 %}
+        <p class="home-in-line-cta"><a href="{{ settings.home-in-line-two-2-url }}">{{ settings.home-in-line-two-2-cta }}<span class="tasticon-cta"></span></a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-in-line-two-3 %}
+    <div class="home-in-line-feature clearfix">
+
+      {% if settings.home-show-in-line-two-images %}
+        <img alt="{{ settings.home-in-line-two-3-title | strip_html | escape }}" src="{{ 'home-in-line-two-image-3.png' | asset_url }}">
+      {% endif %}
+
+      <div class="home-in-line-text">
+        {% if settings.home-in-line-two-3-title.size > 0 %}
+          <h3>{{ settings.home-in-line-two-3-title }}</h3>
+        {% endif %}
+
+        {% if settings.home-in-line-two-3-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-in-line-two-3-text }}
+        </div>
+        {% endif %}
+
+        {% if settings.home-in-line-two-3-url.size > 0 and settings.home-in-line-two-3-cta.size > 0 %}
+        <p class="home-in-line-cta"><a href="{{ settings.home-in-line-two-3-url }}">{{ settings.home-in-line-two-3-cta }}<span class="tasticon-cta"></span></a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-in-line-two-4 %}
+    <div class="home-in-line-feature clearfix">
+
+      {% if settings.home-show-in-line-two-images %}
+        <img alt="{{ settings.home-in-line-two-4-title | strip_html | escape }}" src="{{ 'home-in-line-two-image-4.png' | asset_url }}">
+      {% endif %}
+
+      <div class="home-in-line-text">
+        {% if settings.home-in-line-two-4-title.size > 0 %}
+          <h3>{{ settings.home-in-line-two-4-title }}</h3>
+        {% endif %}
+
+        {% if settings.home-in-line-two-4-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-in-line-two-4-text }}
+        </div>
+        {% endif %}
+
+        {% if settings.home-in-line-two-4-url.size > 0 and settings.home-in-line-two-4-cta.size > 0 %}
+        <p class="home-in-line-cta"><a href="{{ settings.home-in-line-two-4-url }}">{{ settings.home-in-line-two-4-cta }}<span class="tasticon-cta"></span></a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-in-line-two-5 %}
+    <div class="home-in-line-feature clearfix">
+
+      {% if settings.home-show-in-line-two-images %}
+        <img alt="{{ settings.home-in-line-two-5-title | strip_html | escape }}" src="{{ 'home-in-line-two-image-5.png' | asset_url }}">
+      {% endif %}
+
+      <div class="home-in-line-text">
+        {% if settings.home-in-line-two-5-title.size > 0 %}
+          <h3>{{ settings.home-in-line-two-5-title }}</h3>
+        {% endif %}
+
+        {% if settings.home-in-line-two-5-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-in-line-two-5-text }}
+        </div>
+        {% endif %}
+
+        {% if settings.home-in-line-two-5-url.size > 0 and settings.home-in-line-two-5-cta.size > 0 %}
+        <p class="home-in-line-cta"><a href="{{ settings.home-in-line-two-5-url }}">{{ settings.home-in-line-two-5-cta }}<span class="tasticon-cta"></span></a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-in-line-two-6 %}
+    <div class="home-in-line-feature clearfix">
+
+      {% if settings.home-show-in-line-two-images %}
+        <img alt="{{ settings.home-in-line-two-6-title | strip_html | escape }}" src="{{ 'home-in-line-two-image-6.png' | asset_url }}">
+      {% endif %}
+
+      <div class="home-in-line-text">
+        {% if settings.home-in-line-two-6-title.size > 0 %}
+          <h3>{{ settings.home-in-line-two-6-title }}</h3>
+        {% endif %}
+
+        {% if settings.home-in-line-two-6-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-in-line-two-6-text }}
+        </div>
+        {% endif %}
+
+        {% if settings.home-in-line-two-6-url.size > 0 and settings.home-in-line-two-6-cta.size > 0 %}
+        <p class="home-in-line-cta"><a href="{{ settings.home-in-line-two-6-url }}">{{ settings.home-in-line-two-6-cta }}<span class="tasticon-cta"></span></a></p>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% unless settings.home-show-in-line-two-1 or settings.home-show-in-line-two-2 or settings.home-show-in-line-two-3 or settings.home-show-in-line-two-4 or settings.home-show-in-line-two-5 or settings.home-show-in-line-two-6 %}
+    <div class="home-in-line-feature clearfix">
+
+      <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+
+      <div class="home-in-line-text">
+        <h3>{{ 'onboarding.inline_features_section.first_feature_title' | t }}</h3>
+
+        <div class="rte">
+          {{ 'onboarding.inline_features_section.text' | t }}
+        </div>
+      </div>
+    </div>
+
+    <div class="home-in-line-feature clearfix">
+
+      <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+
+      <div class="home-in-line-text">
+        <h3>{{ 'onboarding.inline_features_section.second_feature_title' | t }}</h3>
+
+        <div class="rte">
+          {{ 'onboarding.inline_features_section.text' | t }}
+        </div>
+      </div>
+    </div>
+
+    <div class="home-in-line-feature clearfix">
+
+      <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+
+      <div class="home-in-line-text">
+        <h3>{{ 'onboarding.inline_features_section.third_feature_title' | t }}</h3>
+
+        <div class="rte">
+          {{ 'onboarding.inline_features_section.text' | t }}
+        </div>
+      </div>
+    </div>
+    {% endunless %}
+  </div>
+</div>

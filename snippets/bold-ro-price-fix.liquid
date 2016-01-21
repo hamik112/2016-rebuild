@@ -1,0 +1,19 @@
+{% assign ro_cart_total = 0 %}
+
+{% for item in cart.items %}
+	{% if item.properties.discounted_price != blank %}
+		{% assign ro_price = item.properties.discounted_price %}
+    		{% assign ro_first_character = ro_price | remove: ' ' | slice: 0 %}
+    		{% assign ro_first_character_test = ro_first_character | plus: 0 %}
+
+		{% if ro_first_character_test == 0 %}
+        		{% assign ro_price = ro_price | remove: ro_first_character %}
+		{% endif %}
+		{% assign ro_item_price = ro_price | split: ' ' | first | times: 100 | times: item.quantity %}
+
+		{% assign ro_cart_total = ro_cart_total | plus: ro_item_price %}
+
+	{% else %}
+		{% assign ro_cart_total = ro_cart_total | plus: item.line_price %}
+	{% endif %}
+{% endfor %}

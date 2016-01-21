@@ -1,0 +1,18 @@
+{% assign t = template | split: '/' %}
+<div class="account-nav-wrap clearfix">
+  <div class="account-nav">
+    <ul>
+      <li{% if t[1] == 'account' %} class="active"{% endif %}><span class="tasticon-listed"></span><a href="/account">Subscription</a></li>
+      <li{% if t[1] contains 'edit-details' %} class="active"{% endif %}><span class="tasticon-listed"></span><a href="/account?&view=edit-details">Edit account details</a></li>
+      <li{% if t[1] == 'addresses' %} class="active"{% endif %}><span class="tasticon-listed"></span><a href="/account/addresses">Edit delivery address(es)</a></li>
+      <li{% if t[1] contains 'edit-payment' %} class="active"{% endif %}><span class="tasticon-listed"></span><a href="/account?&view=edit-payment">Update payment information</a></li>
+      <li{% if t[1] contains 'order-history' %} class="active"{% endif %}><span class="tasticon-listed"></span><a href="/account?&view=order-history">Payment/Order history</a></li>
+      <li><span class="tasticon-listed"></span><a href="/account/logout">Log out</a></li>
+    </ul>
+  </div>
+  {% if highlighted %}
+    {{ highlighted }}
+  {% else %}
+  <img src="{{ 'wine-box.png' | asset_url }}" class="wine-box" />
+  {% endif %}
+</div>

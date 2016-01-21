@@ -1,0 +1,128 @@
+<span class="wine-stain top"></span>
+<span class="wine-stain left"></span>
+
+<div class="account-main-wrap">
+  <h1 class="page-title">Account overview</h1>
+
+  {% include 'account-nav' %}
+
+  <div class="account-overview clearfix edit-payment"> 
+
+    <div class="payment-intro">
+      <h2>Update payment information</h2>
+      <p>
+        <span class="tasticon-alert"></span><span><strong>Important information</strong></span><br/>
+        <span>All future recurring payment on your account will use the payment details you enter here.</span><br>
+        You can change your payment details at anytime by logging into your account and updating your payment details.
+      </p>
+    </div>
+    
+    <iframe src="https://taste4.appira.com/update_payment_detail?customer={{ customer.id }}&shop={{ shop.permanent_domain }}" width="100%" height="1050px"></iframe>
+    
+    {% comment %}
+    <form action="" method="">
+      <div class="half-wrap">
+        <h2>Card details <img src="{{ 'cards.png' | asset_url }}" /></h2>
+      
+        <div class="field">
+          <label for="card_name">Name on card</label>
+          <input type="text" name="card_name" value="" />
+        </div>
+        <div class="field">
+          <label for="card_number">Card number</label>
+          <input type="tel" name="card_number" value="" />
+        </div>
+        <div class="field">
+          <label for="expiry_month">Expiry date</label>          
+            <div class="select-group">        
+              <select name="expiry_month">            
+                <option value="1">01</option>                        
+                <option value="2">02</option>                        
+                <option value="3">03</option>                        
+                <option value="4">04</option>            
+                <option value="5">05</option>            
+                <option value="6">06</option>            
+                <option value="7">07</option>           
+                <option value="8">08</option>            
+                <option value="9">09</option>            
+                <option value="10">10</option>            
+                <option value="11">11</option>            
+                <option value="12">12</option>            
+              </select>
+              <span> / </span>
+              <select name="expiry_year">
+                <option value="2015">2015</option>                        
+                <option value="2016">2016</option>            
+                <option value="2017">2017</option>            
+                <option value="2018">2018</option>            
+                <option value="2019">2019</option>            
+                <option value="2020">2020</option>            
+                <option value="2021">2021</option>            
+                <option value="2022">2022</option>            
+                <option value="2023">2023</option>            
+                <option value="2024">2024</option>            
+                <option value="2025">2025</option>            
+              </select> 
+            </div>            
+        </div>
+        <div class="field half">            
+          <label for="csv">CSV</label>
+          <input class="half" type="tel" name="csv" value=""/>
+        </div>
+
+      </div>
+      
+      <div class="half-wrap last">
+      
+        <h2>Billing address</h2>
+        <div class="field half">
+          <label for="address[first_name]">First name</label>
+          <input type="text" name="address[first_name]" value="" />
+        </div>
+        <div class="field half last">
+          <label for="address[last_name]">Last name</label>
+          <input type="text" name="address[last_name]" value="" />
+        </div>
+        <div class="field">
+          <label for="address[company]">Company</label>
+          <input type="text" name="address[company]" value="" />
+        </div>
+         <div class="field half">
+          <label for="address[address1]">Address line 1</label>
+          <input type="text" name="address[address1]" value="" />
+        </div>
+         <div class="field half last">
+          <label for="address[address2]">Address line 2</label>
+          <input type="text" name="address[address2]" value="" />
+        </div>
+        <div class="field">
+          <label for="address[city]">City</label>
+          <input type="text" name="address[city]" value="" />
+        </div>
+        <div class="field half">
+          <label for="address[country]">Country</label>
+          <input type="text" name="address[country]" value="" />
+        </div>
+         <div class="field half last">
+          <label for="address[province]">State/Province</label>
+          <input type="text" name="address[province]" value="" />
+        </div>
+        <div class="field half">
+          <label for="address[zip]">Postcode/Zipcode</label>
+          <input type="text" name="address[zip]" value="" />
+        </div>
+        <div class="field half last">
+          <label for="address[phone]">Phone Number</label>
+          <input type="text" name="address[phone]" value="" />
+        </div>
+        <div class="field">
+          <input type="submit" class="button" value="Update payment details" />
+        </div>
+
+    </div>
+      
+   </form>
+   {% endcomment %}
+    
+  </div>
+</div>

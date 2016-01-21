@@ -1,0 +1,307 @@
+<div class="slide-image" style="background:url('//cdn.shopify.com/s/files/1/0903/8786/t/17/assets/page-bg.png?7430978889834554105');">
+</div>
+
+<div class="cart-content-area">
+<h1 class="page-title">Shopping Basket</h1>
+  
+  <div class="cart-content-area-white">
+
+  {% if cart.item_count > 0 %}
+
+    <form action="/cart" method="post" {% unless customer %}class="not-allowed"{% endunless %}>
+
+      <div class="table cart-items clean">
+        <div class="tr thead">
+            <div class="th first">{{ 'general.product' | t }}</div>
+          <div class="th">&nbsp;</div>
+            <div class="th">{{ 'general.price' | t }}</div>
+            <div class="th">{{ 'general.quantity' | t }}</div>
+            <div class="th last">{{ 'general.total' | t }}</div>
+          </div>
+        
+         <script>mixed_cart = false;</script>
+          {% assign theres_subscription = false %}
+          {% assign subs = 0 %}
+          {% assign non_subs = 0 %}
+          {% assign booklets = 0 %}
+          {% for item in cart.items %}
+          {% assign prod_index = forloop.index0 %} 
+          {% if item.product.template_suffix == 'subscription' %}{% assign subs = subs | plus: item.quantity %}{% endif %}
+          {% if item.product.handle == 'taste4-welcome-booklet'%}{% assign booklets = booklets | plus: item.quantity %}{% endif %}
+          <input type="hidden" name="product_id[{{ forloop.index0 }}]" value="{{ item.product.id }}">
+          <input type="hidden" name="variant_id[{{ forloop.index0 }}]" value="{{ item.variant.id }}">
+          <input type="hidden" name="quantity[{{ forloop.index0 }}]" value="{{ item.quantity }}">
+            <div class="tr cart-item variant-{{ item.variant.id }} {% include 'for-looper' %}" data-variant="{{ item.variant.id }}" data-title="{{ item.product.title }}" data-url="{{ item.url }}">
+              <div class="td cart-item-product first">
+                <a class="cart-image" href="{{ item.url }}"><img src="{{ item | img_url: 'small' }}" alt="{{ item.product.title }}"></a>
+              </div>
+              <div class="td cart-item-product-text">
+                <div class="cart-item-product-wrap{% if item.product.template_suffix == 'subscription' %} subscription-item{% endif %}">
+                  <span class="cart-title"><a href="{{ item.url }}">{{ item.product.title }}</a></span>
+                  <!-- bold-ro-liquid -->
+                  {% for p in item.properties %}
+                    {% if p.first == "frequency_num" %}
+                      <script>
+                        mixed_cart = true;
+                      </script>
+                      <br>
+                      <span class="bold_ro_every">Every</span>
+                      <input type="hidden" name="{{ prod_index }}[number]" value={{p.last}} />
+                    {% endif %}
+
+                    {% if p.first == "frequency_type" %}
+                      <input type="hidden" name="{{ prod_index }}[type_id]" value={{p.last}} />
+                    {% endif %}
+
+                    {% if p.first == "frequency_num" or p.first == "frequency_type_text" %}
+                      {{ p.last }}
+                    {% endif %}
+                    {% if p.first == "group_id" %}
+                      <input type="hidden" name="{{ prod_index }}[group_id]" value={{p.last}} />
+                    {% endif %}
+                    {% if p.first == "discounted_price" %}
+                      <br><span class="bold_ro_discounted_price">Discounted Price</span>
+                      <span class="discounted_price_in_cart">{{ p.last }} </span> <span class="bold_ro_each">each</span>
+                    {% endif %}
+                  {% endfor %}
+                  <!-- bold-ro-liquid -->
+                  <span class="cart-vendor vendor">{{ item.vendor }}</span>
+                  {% unless item.variant.title == 'Default Title' %}
+                    <span class="cart-variant">
+                      {% for variant in item.product.variants %}
+                        {% if variant.id == item.id %}
+                          {% if variant.option1 %}{{ item.product.options[0] | replace: 'Term','Weeks' }}: {{ variant.option1 | replace: 'weeks','' }}<br>{% endif %}
+                          {% if variant.option2 %}{{ item.product.options[1] | replace: 'Term','Weeks'}}: {{ variant.option2 | replace: 'weeks','' }}<br>{% endif %}
+                          {% if variant.option3 %}{{ item.product.options[2] | replace: 'Term','Weeks'}}: {{ variant.option3 | replace: 'weeks','' }}<br>{% endif %}
+                          {% break %}
+                        {% endif %}
+                      {% endfor %}
+                    {% comment %}{{ item.variant.title }}{% endcomment %}
+                    </span>
+                  {% endunless %}
+                  {% if settings.disable-ajax or settings.show-currency-switcher %}
+                    <a class="cart-item-remove bold-ro-remove cart-item-remove-desktop" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
+                  {% else %}
+                    {% unless item.product.handle == 'taste4-welcome-booklet' %}
+                    <span class="cart-item-remove cart-item-remove-desktop">remove</span>
+                    {% endunless %}
+                  {% endif %}
+
+                  {% if item.product.template_suffix == 'subscription' %}
+                    {% assign theres_subscription = true %}
+                    <p class="subscription-info clearfix">
+                      {% comment %}<span class="is-recurring">This Product Is Recurring</span>{% endcomment %}
+                      <!-- Duplicate subscription alert controlled by the reveal duplicates js -->
+                      <span class="alert-txt" style="display:none;"><span class="tasticon-alert"></span>Warning you already have this subscription</span>
+                      <!-- //Duplicate subscription alert -->
+                    </p>
+                  {% else %}
+                    {% assign theres_non_subscription = true %}
+                    {% unless item.product.handle == 'taste4-welcome-booklet' %}
+                      {% assign non_subs = non_subs | plus: item.quantity %}
+                    {% endunless %}
+                  {% endif %}
+
+                </div>
+              </div>
+              <!-- FIX RO ITEM PRICES -->
+              {% if item.properties.discounted_price != blank %}
+                  {% assign ro_price = item.properties.discounted_price %}
+                  {% assign ro_first_character = ro_price | remove: ' ' | slice: 0 %}
+                  {% assign ro_first_character_test = ro_first_character | plus: 0 %}
+
+                  {% if ro_first_character_test == 0 %}
+                      {% assign ro_price = ro_price | remove: ro_first_character %}
+                  {% endif %}
+
+                  {% assign ro_item_price = ro_price | split: ' ' | first | times: 100 %}
+                  {% assign ro_line_item_price = ro_item_price | times: item.quantity %}
+
+              {% else %}
+                  {% assign ro_item_price = item.price %}
+                  {% assign ro_line_item_price = item.line_price %}    
+              {% endif %}
+              <!-- END RO ITEM PRICES -->
+
+               <div class="td cart-item-total cart-item-total-mobile">{% if item.product.handle == 'taste4-welcome-booklet' %}<span>Free</span>{% else %}<span class="money">{{ item.quantity | times: ro_item_price | money }}</span>{% endif %}</div>
+              
+                <div class="td cart-item-price">{% if item.product.handle == 'taste4-welcome-booklet' %}<span>Free</span>{% else %}<span class="money">{{ ro_item_price | money }}</span>{% endif %}</div>
+                <div class="td cart-item-quantity" {% unless item.variant.inventory_management == blank or item.variant.inventory_policy == 'continue' %}data-max="{{ item.variant.inventory_quantity }}"{% endunless %}>
+                  {% if item.product.handle == 'taste4-welcome-booklet' %}
+                  <span class="fake-qty">{{ item.quantity }}</span> 
+                    <input type="text" name="updates[]" class="cart-item-quantity-display is-booklet"  style="display:none;" value="{{ item.quantity }}" data-val="{{ item.quantity }}" size="1">
+                  {% else %}
+                    <span class="cart-item-decrease icon">&#57364;</span>
+                  <!-- <span class="cart-item-quantity-minus"></span> -->
+                    <input type="text" name="updates[]" class="cart-item-quantity-display" value="{{ item.quantity }}" data-val="{{ item.quantity }}" size="1">  
+                  <!-- <span class="cart-item-quantity-plus"></span>  -->
+                    <span class="cart-item-increase icon">&#57365;</span>
+                  {% endif %}
+                </div>
+                
+                <div class="td cart-item-total cart-item-total-desktop last">{% if item.product.handle == 'taste4-welcome-booklet' %}<span>Free</span>{% else %}<span class="money">{{ item.quantity | times: ro_item_price | money }}</span>{% endif %}</div>
+           
+				<div class="td cart-item-product-text cart-item-remove-mobile">
+                  <div class="cart-item-product-wrap{% if item.product.template_suffix == 'subscription' %} subscription-item{% endif %}">
+                    {% if settings.disable-ajax or settings.show-currency-switcher %}
+                      <a class="cart-item-remove bold-ro-remove" href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
+                    {% else %}
+                      {% unless item.product.handle == 'taste4-welcome-booklet' %}
+                      <span class="cart-item-remove">remove</span>
+                      {% endunless %}
+                    {% endif %} 
+                  </div>
+              	</div>
+
+        	</div>
+          {% endfor %}
+
+      </div>
+
+      <div class="cart-tools">
+
+          <div class="cart-footer">
+
+            <div class="cart-footer-right">
+
+              <div class="cart-totals">
+               {% include 'bold-ro-price-fix' %}
+                <div class="cart-price">Total</div>
+                <div class="money">{{ ro_cart_total | money }}</div>
+                {% if theres_subscription == true %}
+                {% comment %}<p class="subscription-message">
+                  Today's total is <span>inclusive of your initial payments</span> for all recurring 
+                  products as well as all the total of all normal products.
+                </p>{% endcomment %}
+
+                {% if theres_subscription %}
+                <div class="recurring-list">
+                  {% comment %}<h4>And then...</h4>{% endcomment %}
+                  <ul>
+                    {% for item in cart.items %}
+                    {% if item.product.template_suffix == 'dont use----subscription' %}
+                    <li><span>{{ item.price | money }} Every {{ item.variant.option1 }}:</span> For {{ item.product.title }}</li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+
+                {% endif %}
+                {% if theres_non_subscription == true %}
+                <p style="display:none" class="non-subscription-message">
+                  {{ settings.cart-multiple-txt }}
+                </p>
+                {% endif %}
+              </div> 
+              
+              
+            </div>
+            <div class="cart-footer-left">         
+
+              {% if settings.cart-show-special-instructions %}
+              <div class="cart-instructions">
+                <p>Delivery instructions</p>
+                <textarea rows="6" name="note" maxlength="100" placeholder="{{ 'cart.instructions_placeholder' | t }}">{% if cart.note and cart.note != 'null' %}{{ cart.note }}{% else %}e.g. Leave sheltered and out of public view.{% endif %}</textarea>
+              </div>
+              {% endif %}  
+
+            </div>
+            <div class="cart-footer-right">  
+            
+              {% if settings.disable-ajax or settings.show-currency-switcher %}
+              <input type="submit" name="update" value="{{ 'cart.update_button' | t }}" class="secondary">
+              <input name="shopify_customer_id" type="hidden" value="{{ customer.id }}" > 
+              <input name="email" type="hidden" value="{{ customer.email }}" > 
+              <input name="address1" type="hidden" value="{{ customer.default_address.address1 }}" > 
+              <input name="address2" type="hidden" value="{{ customer.default_address.address2 }}" > 
+              <input name="city" type="hidden" value="{{ customer.default_address.city }}" > 
+              <input name="company" type="hidden" value="{{ customer.default_address.company }}" > 
+              <input name="country" type="hidden" value="{{ customer.default_address.country }}" > 
+              <input name="first_name" type="hidden" value="{{ customer.default_address.first_name }}" > 
+              <input name="last_name" type="hidden" value="{{ customer.default_address.last_name }}" > 
+              <input name="phone" type="hidden" value="{{ customer.default_address.phone }}" > 
+              <input name="province" type="hidden" value="{{ customer.default_address.province }}" > 
+              <input name="zip" type="hidden" value="{{ customer.default_address.zip }}" >
+              {% include 'bold-ro-cart' %}
+              <input type="submit" name="checkout" data-nonsub="{{ non_subs }}" data-subs="{{ subs }}" data-booklets="{{ booklets }}" class="button" value="Secure Checkout">
+              {% else %} <!-- taking out  disabled class from both buttons, each side of this conditional-->
+                <a class="cart-checkout button" data-nonsub="{{ non_subs }}" data-subs="{{ subs }}" data-booklets="{{ booklets }}" href="/checkout">Secure Checkout</a>
+              {% endif %}
+
+              <span class="cart-cards"></span> 
+
+              <span class="cart-guarantee">All wines have our 100% guarantee</span>
+
+            </div>
+
+          </div>
+
+          {% if additional_checkout_buttons %}
+            <div class="cart-additional-checkout-buttons">
+              {{ content_for_additional_checkout_buttons }}
+            </div>
+          {% endif %}
+
+          {% if settings.show-currency-switcher %}
+            <p class="cart-currency-note meta">{{ 'cart.currency_note_html' | t: currency: shop.currency }}</p>
+          {% endif %}
+
+      </div>
+
+    </form>
+
+    <div class="cart-modal-wrapper">
+      <div class="cart-modal">
+        <h3 class="section-title"></h3>
+
+        <div class="cart-modal-message"></div>
+
+        <div class="cart-modal-action"></div>
+      </div>
+    </div>
+
+    {% if settings.show-shipping-calculator %}
+    <div class="cart-shipping-calculator-wrapper">
+      <div id="shipping-calculator" class="cart-shipping-calculator">
+
+        <p>{{ 'cart.shipping_calculator.header' | t }}</p>
+
+        <div class="shipping-country-wrapper hide-labels">
+          <div class="country-select select-wrapper">
+            <div class="selected-text" data-default="Select country">{{ 'cart.shipping_calculator.country' | t }}</div>
+            <select class="styled-select address-country" id="address_country" name="address[country]" data-default="{% if shop.customer_accounts_enabled and customer %}{{ customer.default_address.country }}{% elsif settings.shipping_calculator_default_country != '' %}{{ settings.shipping_calculator_default_country }}{% endif %}">{{ country_option_tags }}</select>
+          </div>
+        </div>
+
+        <div id="address_province_container" class="shipping-province-wrapper">
+          <div class="province-select select-wrapper">
+            <div class="selected-text" data-default="Select province">{{ 'cart.shipping_calculator.province' | t }}</div>
+            <select class="styled-select address-province" id="address_province" class="address_form" name="address[province]" data-default="{% if shop.customer_accounts_enabled and customer and customer.default_address.province != '' %}{{ customer.default_address.province }}{% endif %}"></select>
+          </div>
+        </div>
+
+        <div class="cart-shipping-zip-code input-wrapper">
+          <input type="text" size="12" class="address-zip" id="address_zip" placeholder="{{ 'customer.addresses.zip' | t }}" name="address[zip]" {% if shop.customer_accounts_enabled and customer %}value="{{ customer.default_address.zip }}"{% endif %} />
+
+          <input type="button" class="cart-shipping-calculate get-rates" value="{{ 'cart.shipping_calculator.submit' | t }}" />
+        </div>
+      </div>
+
+      <div class="cart-shipping-calculator-response">
+      </div>
+    </div>
+    {% endif %}
+
+
+  {% else %}
+
+    <p class="empty">{{ 'cart.empty' | t }} <a href="/">{{ 'cart.continue' | t }}</a></p>
+
+  {% endif %}
+
+  </div>
+
+</div>
+
+{% include 'home-as-seen-on' %}  

@@ -1,0 +1,121 @@
+{% for product in collections.white-wine-club.products | limit: 1 %}
+
+{% assign item = product %}
+
+{% if settings.product-stock-level-overlay and item.available %}
+  {% assign total = 0 %}
+  {% assign threshold = settings.product-stock-level-overlay-threshold | times: 1 %}
+  {% assign infinity = false %}
+  {% for variant in item.variants %}
+    {% if variant.inventory_management == null %}
+      {% assign infinity = true %}
+    {% elsif variant.inventory_management == '' %}
+      {% assign infinity = true %}
+    {% elsif infinity == false %}
+      {% capture temp %}{{ total | plus: variant.inventory_quantity }}{% endcapture %}
+      {% assign total = temp | times: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<article class="product-list-item" id="product-list-item-{{ item.id }}">
+
+  <div class="product-list-item-details">
+
+    <div class="product-list-item-popout" id="product-list-item-popout-{{ item.id }}">
+
+      <div class="eye-button"></div>
+      <div class="close-button"></div>
+      
+      <p class="product-list-item-vendor vendor meta">{{ item.vendor }}</p>
+      <h1>The Whites</h1>
+
+      <figure class="product-list-item-thumbnail">
+        <img src="https://cdn.shopify.com/s/files/1/0903/8786/t/17/assets/white.png?10067666504946452907" alt="{{ item.featured_image.alt | escape }}" />
+
+        {% if settings.product-stock-level-overlay and item.available and infinity == false and total < threshold %}
+          <span class="stock-overlay meta">{{ 'products.product.stock_level' | t: stock_count: total }}</span>
+        {% endif %}
+
+        {% if item.compare_at_price_min > item.price_min and item.available %}
+          <span class="sale-badge">&#57367;</span>
+        {% endif %}
+      </figure>
+
+      <div class="show-case-view">
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/13358_grande.jpg?v=1450281879" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">The Huguenot Chenin Blanc
+          <br>From Western Cape WO in South Africa</p>
+            <p>The South Africans excel at fresh, fruity Chenin Blancs and the Huguenot is one of our all-time favourites. Lovely ripe tropical fruit with a refreshing lemony twist. Nom nom!</p>        </p>
+          </div>
+        </div>
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/13003_grande.jpg?v=1450282196" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">Château Le Coin Sauvignon Gris
+          <br>From Bordeaux</p>
+          <p>
+            You’ve heard of Sauvignon Blanc, but Sauvignon Gris? This subtle, but spicier cousin of the UK’s most popular grape is Bordeaux’s rarest variety. So don’t tell anyone how delicious it is – there isn’t much to go round!
+          </p>
+          </div>
+        </div>
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/29589_mock_edit_grande.jpg?v=1450350271" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">Westend Estate Pinot Grigio
+          <br>From Riverina, Australia</p>
+          <p>
+            Here’s one you’ll definitely know. Pinot Grigio is one of the UK’s best loved wines. Westend Estate is a really ripe fruity example from sunny Australia with gorgeous peach and pear fruit.
+          </p>
+          </div>
+        </div>
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/13032_grande.jpg?v=1450283543" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">Abbesse Royale Sauvignon Blanc
+          <br>From the Loire Valley, France</p>
+          <p>
+            If you’re looking for a sure-fire hit, this Sauvignon Blanc is hard to beat. Lively gooseberry and apple aromas … check! Rich tropical fruit flavours … check! Zippy lemony finish … check!
+          </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="product-list-item-price">
+        {% if item.available %}
+          {% if item.price_varies %}
+            <span class="price">{% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %} <span class="money">{{ item.price_min | money }}</span></span>
+          {% else %}
+            <span class="price">
+              <span class="money">{{ item.price_min | money }}</span> every four weeks
+              {% unless item.compare_at_price_min <= item.price_min %}
+                <span class="original money">
+                  {% if item.compare_at_price_min > item.price_min %}
+                    {{ item.compare_at_price_min | money }}
+                  {% endif %}
+                </span>
+              {% endunless %}
+            </span>
+          {% endif %}
+        {% else %}
+          {{ 'products.product.sold_out' | t }}
+        {% endif %}
+      </p>
+      <p class="rte">
+        4 handpicked whites delivered to your door every 4 weeks for only £20
+      </p>
+      <p class="cta">
+        <a href="{{ item.url }}">More info</a>
+      </p>
+    
+    </div>
+  
+    <a class="button permalink" href="/cart" data-id="{{ item.variants[0].id }}" data-title="{{ product.title | replace: ' ','-' }}">
+      <span>Add the whites to basket</span>
+    </a>
+  </div>
+
+</article>
+{% endfor %}

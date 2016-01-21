@@ -1,0 +1,44 @@
+<span class="wine-stain top"></span>
+<span class="wine-stain left"></span>
+
+<div class="account-alert">
+  <h3>You've successfully edited your subscription!</h3>
+</div>
+
+<div class="account-main-wrap">
+  <h1 class="page-title">Account overview</h1>
+
+  {% include 'account-nav' %}
+
+  <div class="account-overview clearfix">
+
+    <div class="half-wrap">
+      <h2>Change email address</h2>
+      <div class="form-wrap">
+        <!-- Calls update email method on the app -->
+        <form action="update-email" class="subscription-form">
+          <div class="field first">
+            <label>Email address</label>
+            <input type="email" value="" name="email" required/>
+          </div>
+          <div class="field">
+            <label>Confirm email address</label>
+            <input type="email" value="" name="email_confirmation" required/>          
+          </div>
+          <input class="button"  type="submit" value="Save changes" />
+        </form>
+      </div>
+    </div>
+    <div class="half-wrap last">
+      <h2>Change password</h2>
+      <div class="form-wrap">
+      {% form 'recover_customer_password' %}
+        <p>Request a password reset, an email will be sent to your address
+          which will guide you throught the password reset process.</p>
+        <input type="hidden" value="{{ customer.email }}" name="email" id="recover-email"  />
+        <input class="button"  type="submit" value="Reset password" />
+      {% endform %}
+      </div>
+    </div>
+  </div>
+</div>

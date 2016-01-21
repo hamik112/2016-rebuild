@@ -1,0 +1,38 @@
+<div id="home-feature-full-width" class="home-module-wrapper {{ settings.home-feature-full-width-style }} {% if settings.home-feature-full-width-borders %}borders{% endif %}">    
+  <div id="home-feature-full-width-scroll">
+    <span>
+      <a href="#home-in-line-two"></a>
+    </span>
+  </div>
+  
+  <div class="home-module home-feature-full-width-features">
+  
+    {% if settings.home-show-feature-full-width-1 %}
+    <div class="home-feature-full-width-feature clearfix media-aligned-{{settings.home-feature-full-width-1-media-alignment}}">
+
+      <div class="home-feature-full-width-content">
+        
+        <div class="home-feature-full-width-text {{ settings.home-feature-full-width-1-media-alignment }}">
+          <div class="rte">
+          {% if settings.home-feature-full-width-1-title.size > 0 %}
+            <h2>{{ settings.home-feature-full-width-1-title }}</h2>
+          {% endif %}
+          {{ settings.home-feature-full-width-1-text }}
+          </div>
+        </div>
+        
+        <div class="home-feature-full-width-media {{ settings.home-feature-full-width-1-media-alignment }}">
+          {% if settings.home-feature-full-width-1-media == 'image' %}
+          <img class="home-feature-full-width-side-image" alt="{{ settings.home-feature-full-width-1-title | strip_html | escape }}" src="{{ 'home-feature-full-width-image-1.png' | asset_url }}">
+          {% elsif settings.home-feature-full-width-1-media == 'video' %}
+          <div class="home-feature-full-width-video">{{ settings.home-feature-full-width-1-video }}</div>
+          {% endif %}
+        </div>
+          
+      </div>
+        
+    </div>
+    {% endif %}
+    
+  </div>
+</div>

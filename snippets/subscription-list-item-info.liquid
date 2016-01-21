@@ -1,0 +1,39 @@
+<article class="product-list-item info">
+  
+  <div class="subscription-feature-full-width-content">  
+    
+    <div class="subscription-feature-full-width-heading">
+      <h2 >You don't need expertise</h2>
+      <p>We'll deliver that to your door</p>
+    </div>
+  
+    <div class="subscription-feature-full-width-media"></div>
+    
+    <div class="subscription-feature-full-width-heading-mobile">
+      <h2 >You don't need expertise</h2>
+      <p>We'll deliver that to your door</p>
+    </div>    
+    
+    <div class="subscription-feature-full-width-text">
+    
+      <div class="product-list-item-details">
+        <h1><a href="{{ item.url | within: collection }}">Give it a shot, we guarantee you'll love it</a></h1>
+        <div class="rte">
+          <ul class="home-slide-bullets">
+            <li>4 handpicked wines every 4 weeks</li>
+            <li>Delivered FREE to your preferred location</li>
+            <li>Wines from off the beaten track</li>
+            <li>FREE tasting notes</li>
+            <li>What are you waiting for?</li>
+          </ul>
+        </div>
+        {% if settings.slide-1-cta.size > 0 and settings.slide-1-url.size > 0 %}
+        {% endif %}
+      </div>
+      
+    </div>
+    
+  </div>
+        
+  
+</article>

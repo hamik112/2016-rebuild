@@ -1,0 +1,23 @@
+<div id="home-mixem-up" class="home-module-wrapper {{ settings.home-mixem-up-style }}">
+  <div class="home-module">
+
+    <div class="home-mixem-up-feature clearfix">
+
+      <div class="home-mixem-up-text">
+
+        {% if settings.home-mixem-up-url.size > 0 and settings.home-mixem-up-cta.size > 0 %}
+        <p class="home-mixem-up-cta"><a class="button" href="{{ settings.home-mixem-up-url }}">{{ settings.home-mixem-up-cta }}</a></p>
+        {% endif %}
+        
+        {% if settings.home-mixem-up-text.size > 0 %}
+        <div class="rte">
+          {{ settings.home-mixem-up-text }}
+        </div>
+        {% endif %}
+
+        <img src="{{ 'home-mixem-up-image.png' | asset_url }}">
+      </div>
+    </div>
+
+  </div>
+</div>

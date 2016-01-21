@@ -1,0 +1,96 @@
+/* inspira's changes */
+body,.order-summary__emphasis,
+.payment-due-label,.payment-due__price,
+.total-recap__final-price,.content-box,
+.content-box__emphasis{
+  color: #86567c;
+}
+a{
+  color: #b45327;
+}
+.page--no-banner .main, .page--no-banner .sidebar {
+   padding-top: 3em !important;
+}
+.breadcrumb{
+  display:none;
+}
+.logo__image--large {
+  max-height: 5em;
+}
+.main h2 {
+  color: #86567c;
+  font-weight: 500;
+  font-size: 22px;
+}
+.main .section--shipping-address h2{
+  font-size: 18px;
+}
+.main .field__input,.field__input {
+  color:rgba(134,86,124,1);
+  border:1px solid rgba(134,86,124,0.5);
+  box-shadow: none !important;
+}
+
+.floating-labels .main .field__label,
+.order-summary__small-text,
+.payment-due__currency,
+.floating-labels .sidebar .field__label{
+  color:rgba(134,86,124,0.5);
+}
+
+.payment-due__label small, .order-summary__small-text{
+  display:none;
+}
+
+.section__text{
+  display:none;
+}
+
+
+input::-webkit-input-placeholder{
+  color:rgba(134,86,124,0.5) !important;
+}
+input:-moz-placeholder{
+  color:rgba(134,86,124,0.5) !important;
+}
+input::-moz-placeholder{
+  color:rgba(134,86,124,0.5) !important;
+}
+input:-ms-input-placeholder { 
+  color:rgba(134,86,124,0.5) !important;
+}
+
+.content{
+  background:white;
+}
+.sidebar{
+  border-left:1px solid rgba(64,64,64,0.3);
+  color: #86567c;
+}
+
+.btn{
+  font-size:14px;
+  border:1px solid #472b42;
+  height: 40px;
+  line-height: 40px;
+  text-shadow: 0px -1px #000000;
+  padding: 0 30px;
+  background: #86567c;
+}
+.js .sidebar .btn--disabled{
+  border:1px solid #c8c8c8;
+  text-shadow: none;
+}
+.flexbox .field__input-btn {
+  height: 47px;
+}
+
+.logged-in-customer-information__paragraph a { display: none; }
+
+@media only screen and (max-width:999px){
+
+  .sidebar{
+    border-left:0;
+  }
+  
+}

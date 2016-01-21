@@ -1,0 +1,19 @@
+#shopillaxcookielaw-overlay {position:fixed;z-index:998;width:100%;left:0;right:0;height:100%;top:0;background:rgba(255,255,255,0.6); }
+#shopillaxcookielaw-overlay.remove {height:0px !important;;display:none !important;}
+#shopillaxcookielaw-wrapper {position:fixed;z-index:9999;width:100%;left:0;right:0;text-align:center;top:0;background:rgba(0,0,0,0.8);font-family:Arial;font-size:12px;line-height:18px;pointer-events: auto !important;}
+#shopillaxcookielaw-wrapper.bottom {bottom:0;top:auto !important;}
+#shopillaxcookielaw-wrapper.top {top:0;}
+#shopillaxcookielaw-content {padding:0px;width:auto;display:inline-block;margin:0 auto;text-align:center;border-collapse:collapse;margin:0 20px;color:#fff;max-width:1240px;}
+#shopillaxcookielaw-content p {margin:0px;padding:0;}
+
+#shopillaxcookielaw-content a:hover {text-decoration:none;}
+#shopillaxcookielaw-content #shopillaxcookielaw-desc {margin:0;padding:20px;}
+#shopillaxcookielaw-content a.shopillaxcookielaw_button {text-decoration:none;color:#FFFFFF;padding:5px 10px 4px 10px;margin:0 0 0 5px;display:inline-block;vertical-align:middle;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;font-size:11px;line-height:11px;color:#ffffff;width:auto !important;}
+#shopillaxcookielaw-content a.shopillaxcookielaw_close {background-color:#FF0004;} 
+/*#shopillaxcookielaw-content a.shopillaxcookielaw_close:hover {background-color:#ec0609;}*/
+#shopillaxcookielaw-content a.shopillaxcookielaw_more-info {background-color:#409ed5;} 
+/*#shopillaxcookielaw-content a.shopillaxcookielaw_more-info:hover {background-color:#3491C8;} */
+
+#shopillaxcookielaw-overlay {background:rgba(,0.6);}
+#shopillaxcookielaw-wrapper {background:rgba(,0.8);}
+#shopillaxcookielaw-content p {color:;}

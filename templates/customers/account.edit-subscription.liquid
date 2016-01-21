@@ -1,0 +1,80 @@
+<span class="wine-stain top"></span>
+<span class="wine-stain left"></span>
+
+<div class="account-alert">
+  <h3></h3>
+</div>
+
+<div class="account-main-wrap">
+  <h1 class="page-title">Account overview</h1>
+
+  {% include 'account-nav' %}
+
+  <div class="account-overview clearfix subscription-manager"> 
+
+    <h2>Edit subscription</h2>
+    <div class="half-wrap">
+      <div class="subs-img-wrap">
+        <img data-subscription-product-image>
+      </div>
+    </div>
+    <div class="half-wrap last">
+      <div class="subs-info-wrap">
+        <h3 data-subscription-product-title></h3>
+        {% comment %}
+        <select class="product-select">
+          <option value="">Option 1</option>
+          <option value="">Option 2</option>
+        </select>
+        <select class="product-select">
+          <option value="">Option 1</option>
+          <option value="">Option 2</option>
+        </select>
+        {% endcomment %}
+        {% assign product = collection.all.products.first %}
+        {% if product.variants.size > 1 %}
+          <div class="product-options">
+            <select name="id" id="product-select" class="product-select">
+              {% for variant in product.variants %}
+              <option {% if variant == selectedVariant %} selected="selected" {% endif %} value="{{ variant.id }}" data-price="{{ variant.price | money_without_currency | remove: ','}}">{{ variant.title }} - {{ variant.price | money }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% else %}
+          <input type="hidden" name="id" class="product-select" value="{{ product.variants[0].id }}" data-variant-title="{{ product.variants[0].title }}" />
+        {% endif %}
+        <p class="price"><span class="money" data-subscription-amount></span> every <em data-subscription-term></em></p>
+        <p class="payment-info">Your new subscription payment will be taken on <em data-subscription-expiry></em></p>
+        <p><span>We will take the payment from your saved payment details.</span></p>
+        <button>Confirm changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.productJSON = {{ product | json }};
+  $(document).ready(function(){
+    if($('#product-select').length){
+      var enableHistory, i, len, ref, selector;
+      enableHistory = true;
+
+      new Shopify.OptionSelectors("product-select", {
+        product: window.productJSON,
+        onVariantSelected: this.selectCallback,
+        enableHistoryState: enableHistory
+      });
+      var ref = $(".selector-wrapper");
+      for (i = 0, len = ref.length; i < len; i++) {
+        var selector = ref[i];
+        $(selector).find("select").wrap("<div class='select-wrapper' />").parent().prepend("<div class='select-text' />");
+      }
+      //added - hide selector when only one option
+      $('select.single-option-selector').each(function(){
+        if($(this).find('option').length < 2){
+          $(this).parents('.select-wrapper').hide();
+        }
+      });
+    }
+  });
+</script>

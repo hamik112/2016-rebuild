@@ -1,0 +1,123 @@
+{% for product in collections.red-wine-club.products | limit: 1 %}
+
+{% assign item = product %}
+
+{% if settings.product-stock-level-overlay and item.available %}
+  {% assign total = 0 %}
+  {% assign threshold = settings.product-stock-level-overlay-threshold | times: 1 %}
+  {% assign infinity = false %}
+  {% for variant in item.variants %}
+    {% if variant.inventory_management == null %}
+      {% assign infinity = true %}
+    {% elsif variant.inventory_management == '' %}
+      {% assign infinity = true %}
+    {% elsif infinity == false %}
+      {% capture temp %}{{ total | plus: variant.inventory_quantity }}{% endcapture %}
+      {% assign total = temp | times: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<article class="product-list-item" id="product-list-item-{{ item.id }}">
+
+  <div class="product-list-item-details">
+
+    <div class="product-list-item-popout" id="product-list-item-popout-{{ item.id }}">
+
+      <div class="eye-button"></div>
+      <div class="close-button"></div>
+      
+      <p class="product-list-item-vendor vendor meta">{{ item.vendor }}</p>
+      <h1>The Reds</h1>
+
+      <figure class="product-list-item-thumbnail">
+        <img src="https://cdn.shopify.com/s/files/1/0903/8786/t/17/assets/red.png?2539352254806144424" alt="{{ item.featured_image.alt | escape }}" />
+
+        {% if settings.product-stock-level-overlay and item.available and infinity == false and total < threshold %}
+          <span class="stock-overlay meta">{{ 'products.product.stock_level' | t: stock_count: total }}</span>
+        {% endif %}
+
+        {% if item.compare_at_price_min > item.price_min and item.available %}
+          <span class="sale-badge">&#57367;</span>
+        {% endif %}
+      </figure>
+
+      <div class="show-case-view">
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/66677_grande.jpg?v=1450352716" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">Limited Release Pinot Noir
+          <br>From South Australia</p>
+          <p>
+            Not many grapes can claim to have played a starring role in a film. But if you’ve seen ‘Sideways’ you’ll have heard of Pinot Noir. Burgundy’s star grape also does very nicely in some of Australia’s cool Eden Valley – taste for yourself and I’m sure you’ll agree!
+          </p>
+          </div>
+        </div>
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/66031_grande.jpg?v=1450285518" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">Beau Bijou Cabernet Sauvignon
+          <br>From Southern France</p>
+          <p>
+            This ‘Beautiful Jewel’ from southern France is so dark it’s like a blackout curtain for your glass. Made from Cabernet Sauvignon, the ‘king’ of red grapes, it simply oozes rich ripe blackcurrant flavour – definitely one to serve in large glasses!
+          </p>
+          </div>
+        </div>
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/65755_grande.jpg?v=1450284347" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">The Rustler Pinotage
+          <br>From Western Cape, South Africa</p>
+          <p>
+            Pinotage is South Africa’s answer to Aussie Shiraz. Full bodied, rich and juicy, with lovely dark hints of cinnamon, spice and wood smoke – it’s as welcome on a cold winter’s night as it is at a summer barbecue.
+          </p>
+          </div>
+        </div>
+        <div class="show-case-view-item">
+          <img src="https://cdn.shopify.com/s/files/1/0903/8786/products/66171_grande.jpg?v=1450284660" alt="{{ item.featured_image.alt | escape }}" />
+          <div class="rte">
+          <p class="rte-title">Principe Strozzi
+          <br>From Tuscany, Italy</p>
+          <p>
+            This gorgeous cherry-rich Chianti is so easy to drink, you’d never guess it had royal connections. In fact the Strozzi family includes counts and princes, and they even claim a connection to Lisa Gherardini del Giocondo – better known as the Mona Lisa. Guaranteed to put an enigmatic smile on your face!
+          </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="product-list-item-price">
+        {% if item.available %}
+          {% if item.price_varies %}
+            <span class="price">{% if item.price_varies %}{{ 'products.product.from' | t }}{% endif %} <span class="money">{{ item.price_min | money }}</span></span>
+          {% else %}
+            <span class="price">
+              <span class="money">{{ item.price_min | money }}</span> every four weeks
+              {% unless item.compare_at_price_min <= item.price_min %}
+                <span class="original money">
+                  {% if item.compare_at_price_min > item.price_min %}
+                    {{ item.compare_at_price_min | money }}
+                  {% endif %}
+                </span>
+              {% endunless %}
+            </span>
+          {% endif %}
+        {% else %}
+          {{ 'products.product.sold_out' | t }}
+        {% endif %}
+      </p>
+      <p class="rte">
+        4 handpicked reds delivered to your door every 4 weeks for only £20
+      </p>
+      <p class="cta">
+        <a href="{{ item.url }}">More info</a>
+      </p>
+    
+    </div>
+    
+    <a class="button permalink" href="/cart" data-id="{{ item.variants[0].id }}" data-title="{{ product.title | replace: ' ','-' }}">
+      <span>Add the reds to basket</span>
+    </a>
+  </div>
+
+</article>
+{% endfor %}

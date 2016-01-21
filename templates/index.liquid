@@ -1,0 +1,57 @@
+{% capture themeSettingsLink %}
+  <a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t | downcase }}</a>
+{% endcapture %}
+
+{% if settings.show-slideshow and settings.show-slide-1 or settings.show-slide-2 or settings.show-slide-3 or settings.show-slide-4 or settings.show-slide-5 %}
+  {% unless settings.home-show-hero %}
+    {% include 'home-slideshow' %}
+  {% endunless %}
+{% endif %}
+
+{% if settings.home-show-hero %}
+  {% include 'home-hero' %}
+{% endif %}
+
+{% if settings.home-sections-order != blank %}
+  {% assign sections = settings.home-sections-order | split: "-" %}
+
+  {% for section in sections %}
+    {% case section %}
+      {% when 'A' %}
+        {% include 'home-full-width' %}
+      {% when 'B' %}
+        {% include 'home-left-right' %}
+      {% when 'C' %}
+        {% include 'home-in-line' %}
+      {% when 'D' %}
+        {% include 'home-testimonials' %}
+      {% when 'E' %}
+        {% include 'home-order-now' %}
+      {% when 'F' %}
+        {% include 'home-featured-collections' %}
+      {% when 'G' %}
+        {% include 'home-featured-products' %}
+      {% when 'H' %}
+        {% include 'home-featured-blog' %}
+      {% when 'I' %}
+        {% include 'home-as-seen-on' %}
+      {% when 'J' %}
+        {% include 'home-instagram' %}
+	  {% when 'K' %}
+        {% include 'home-in-line-two' %}
+      {% when 'L' %}
+        {% include 'home-mixem-up' %}
+      {% when 'M' %}
+        {% include 'home-wine-lovers' %}
+      {% when 'N' %}
+        {% include 'home-feature-full-width' %}
+	  {% when 'O' %}
+        {% include 'home-voucher-feature' %}
+	  {% when 'P' %}
+        {% include 'home-twitter-carousel' %}
+	  {% when 'Z' %}
+      	{% include 'mailing-list' %}
+    {% endcase %}
+  {% endfor %}
+
+{% endif %}

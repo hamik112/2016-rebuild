@@ -1,0 +1,55 @@
+<span class="wine-stain top"></span>
+<span class="wine-stain left"></span>
+
+<div class="account-alert">
+  <h3>You've successfully edited your subscription!</h3>
+  <!--<p>Mixed Case Subscription Edited</p>
+  <p>Your next subscription payment will be taken on 30/12/15</p>-->
+</div>
+
+<div class="account-main-wrap">
+  <h1 class="page-title">Account overview</h1>
+
+  {% include 'account-nav' %}
+
+  <div class="account-overview clearfix"> 
+
+    <div class="half-wrap">
+      <h2>Active subscriptions</h2>
+      <div class="subscription-loop active-subscriptions">
+        <h4 style="display:none;">You do not currently have any active subscriptions.</h4>
+        <!-- active subscriptions output here -->
+      </div>
+    </div>
+    <div class="half-wrap last">
+      <h2>Cancelled subscriptions</h2>
+      <div class="subscription-loop inactive">
+        <!-- inactive subscriptions output here -->
+      </div>
+    </div>
+   
+    <!-- this subscription clone is used as a template to generate the subscription html -->
+    <div class="subscription-item subscription-clone { subscription.payment_class }" id="subscription-{ subscription.id }" style="display:none;">
+
+      <div class="img-wrap">
+        { subscription.product.image }
+      </div>
+      
+      <div class="info-wrap">
+        <h3>{ subscription.product.title }</h3>
+        <p class="info">{ subscription.term } recurring subscription</p>
+        <p class="price">{ subscription.amount }</p>
+        <p class="next-payment">{ subscription.payment_status }</p>
+        <!--<p class="next-delivery">Next delivery due </p>-->
+        <!--<p class="fail-info">Failed payment <i>></i>  <a href="#">Update payment details</a></p>-->
+
+        <div class="actions clearfix">
+          { subscription.actions }
+        </div>
+         
+        { subscription.cancel_text }
+      </div>
+
+    </div>
+  </div>
+</div>

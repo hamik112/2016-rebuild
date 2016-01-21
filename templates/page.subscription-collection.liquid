@@ -1,0 +1,71 @@
+<div class="home-slideshow-wrapper">
+
+  <div class="home-top-section">
+
+      <div id="home-slide-1" class="home-slide home-slide-1 text-aligned-left">
+       	  <div class="slide-image" style="background:url('//cdn.shopify.com/s/files/1/0903/8786/t/17/assets/page-bg.png?7430978889834554105');">
+          </div>
+          <!--<img class="slide-image" alt="abc" src="//cdn.shopify.com/s/files/1/0903/8786/t/17/assets/slide-1-image.jpg?4441224443214298307">-->
+
+          <div class="slide-text">
+           	<h2>Discovering better wines starts here</h2>
+            
+            <h3>Find a '4' that suits you down to the ground</h3>
+            
+            <div>
+              <ul class="home-slide-bullets">
+                {% if settings.slide-1-bullet-1.size > 0 %}
+                  <li>{{ settings.slide-1-bullet-1 }}</li>
+                {% endif %}
+
+                {% if settings.slide-1-bullet-2.size > 0 %}
+                  <li>{{ settings.slide-1-bullet-2 }}</li>
+                {% endif %}
+              </ul> 
+              <ul class="home-slide-bullets">
+                {% if settings.slide-1-bullet-3.size > 0 %}
+                  <li>{{ settings.slide-1-bullet-3 }}</li>
+                {% endif %}
+
+                {% if settings.slide-1-bullet-4.size > 0 %}
+                  <li>{{ settings.slide-1-bullet-4 }}</li>
+                {% endif %}
+              </ul>
+        	</div>
+            
+            <div id="subscriptions-collection" class="{% if customer %}purchase-allowed {% endif %}collection-products products-per-row-4">
+              {% include 'subscription-list-item-red' %}
+              {% include 'subscription-list-item-white' %}
+              {% include 'subscription-list-item-mix' %}
+            </div>
+            
+            {% if settings.slide-1-small-text.size > 0 %}
+              <p class="small-text">{{ settings.slide-1-small-text }}</p>
+            {% endif %}
+            
+          </div>
+
+      </div>
+
+  </div>
+</div>
+
+<div id="subscription-feature-full-width" class="home-module-wrapper {{ settings.subscription-feature-full-width-style }} {% if settings.subscription-feature-full-width-borders %}borders{% endif %}">    
+  
+  	<div class="subscription-feature-full-width-bg" style="background:url('//cdn.shopify.com/s/files/1/0903/8786/t/17/assets/page-bg.png?7430978889834554105');">
+    </div>
+          
+	<div class="home-module subscription-feature-full-width-features">
+  
+    {% if settings.home-show-feature-full-width-1 %}
+    <div class="subscription-feature-full-width-feature clearfix media-aligned-{{settings.subscription-feature-full-width-1-media-alignment}}">
+	  {% include 'subscription-list-item-info' %}
+    </div>
+    {% endif %}
+    
+  </div>
+
+</div>
+
+{% include 'home-as-seen-on' %}
+

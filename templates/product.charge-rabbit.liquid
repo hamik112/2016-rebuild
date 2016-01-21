@@ -1,0 +1,14 @@
+<form action="{{ product.metafields.charge_rabbit.subscribe_path }}" method="get" class="charge-rabbit-product">
+  <h1>{{ product.title }}</h1>
+  {% if product.featured_image %}
+		<img src="{{ product.featured_image.src | product_img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" />
+  {% endif %} 
+  <p>{{ product.description }}</p>
+  <input type="hidden" name="customer_id" value="{{customer.id}}"/>
+  <select name="id">
+    {% for variant in product.variants %}
+      <option value="{{ variant.id }}">{% unless variant.title == 'Default Title' %}{{ variant.title }} - {% endunless %}{{ variant.metafields.charge_rabbit.amount | money }}/{{ variant.metafields.charge_rabbit.interval }}</option>
+    {% endfor %}
+  </select>
+  <input type="submit" value="Join Now"/>
+</form>

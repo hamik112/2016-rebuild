@@ -1,0 +1,36 @@
+<div id="home-voucher-feature" class="home-module-wrapper {{ settings.home-voucher-feature-style }} {% if settings.home-voucher-feature-borders %}borders{% endif %}"> 
+  <div class="home-voucher-feature-bg" style="background:url('{{ 'home-voucher-feature-1-image-1.png' | asset_url }}');" ></div>
+  <div class="home-module home-voucher-feature-features">
+  
+    {% if settings.home-show-voucher-feature-1 %}
+    <div class="home-voucher-feature-feature clearfix media-aligned-{{settings.home-voucher-feature-1-media-alignment}}">
+
+      <div class="home-voucher-feature-content">
+        
+    	<div class="home-voucher-feature-text {{ settings.home-voucher-feature-1-media-alignment }}">
+          {% if settings.home-voucher-feature-1-title.size > 0 %}
+            <h2>{{ settings.home-voucher-feature-1-title }}</h2>
+            <h3>{{ settings.home-voucher-feature-1-title-2 }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.home-voucher-feature-1-text }}
+          </div>
+          <div class="rte-2">
+            {{ settings.home-voucher-feature-1-text-mobile }}
+          </div>  
+          <h4>{{ settings.home-voucher-feature-1-title-3 }}</h4>
+        </div>
+        
+        <div class="home-voucher-feature-button">
+            {% if settings.home-voucher-feature-1-url.size > 0 and settings.home-voucher-feature-1-cta.size > 0 %}
+            <p class="home-voucher-feature-cta"><a class="button" href="{{ settings.home-voucher-feature-1-url }}">{{ settings.home-voucher-feature-1-cta }}</a></p>
+            {% endif %}
+        </div>
+          
+      </div>
+        
+    </div>
+    {% endif %}
+    
+  </div>
+</div>

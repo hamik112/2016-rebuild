@@ -1,0 +1,48 @@
+<div id="home-lovers" class="home-module-wrapper {{ settings.home-lovers-style }}">
+  <div class="home-module clearfix">
+    
+    {% if settings.home-lovers-title != blank %}
+    <h3 class="section-title">{{ settings.home-lovers-title }}</h3>
+    {% endif %}
+
+    <div class="home-lovers-feature left">
+
+      <div class="home-lovers-stars">
+        {% assign stars = settings.home-lovers-1-stars | plus: 0 %}
+        {% for i in (1..stars) %}
+        <span class="tasticon-star"></span>
+        {% endfor %}
+      </div>
+      
+      <div class="rte">
+        <span class="tasticon-brk-o"></span>
+        {{ settings.home-lovers-1-text }}
+        <span class="tasticon-brk-c"></span>
+      </div>
+      
+      <p class="home-lover-name">{{ settings.home-lovers-1-name }}</p>
+    
+    </div>
+    
+    <div class="home-lovers-feature">
+
+      <div class="home-lovers-stars">
+        {% assign stars = settings.home-lovers-2-stars | plus: 0 %}
+        {% for i in (1..stars) %}
+        <span class="tasticon-star"></span>
+        {% endfor %}
+      </div>
+      
+      <div class="rte">
+        <span class="tasticon-brk-o"></span>
+        {{ settings.home-lovers-2-text }}
+        <span class="tasticon-brk-c"></span>
+      </div>
+      
+      <p class="home-lover-name">{{ settings.home-lovers-2-name }}</p>
+    
+    </div>
+
+
+  </div>
+</div>

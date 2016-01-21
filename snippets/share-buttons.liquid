@@ -1,0 +1,47 @@
+{% assign shareCountClass = '' %}
+
+{% if template contains 'article' or template contains 'blog' %}
+
+  {% capture permalinkURL %}{{ shop.url }}{{ article.url }}{% endcapture %}
+
+  {% unless settings.blog-display-share-count %}
+    {% assign shareCountClass = 'no-count' %}
+  {% endunless %}
+
+{% elsif template contains 'product' %}
+
+  {% capture permalinkURL %}{{ shop.url }}{{ product.url }}{% endcapture %}
+
+  {% unless settings.product-display-share-count %}
+    {% assign shareCountClass = 'no-count' %}
+  {% endunless %}
+
+{% endif %}
+
+<div class="share-buttons {{ shareCountClass }}" data-permalink="{{ permalinkURL }}">
+
+  <a target="_blank" href="//www.facebook.com/sharer.php?u={{ permalinkURL }}">
+    <span class="tasticon-facebook"></span>
+  </a>
+
+  <a target="_blank" href="//twitter.com/share?url={{ permalinkURL }}">
+    <span class="tasticon-twitter"></span>
+  </a>
+
+  {% if template contains 'product' %}
+
+    <a target="_blank" href="//pinterest.com/pin/create/button/?url={{ permalinkURL }}&amp;media=http:{{ product.featured_image | product_img_url: 'original' }}&amp;description={{ product.title | escape }}">
+      <span class="tasticon-pinterest"></span>
+    </a>
+
+    {%comment %}<a target="_blank" href="http://www.thefancy.com/fancyit?ItemURL={{ permalinkURL }}&amp;Title={{ product.title }}&amp;Category=Other&amp;ImageURL={{ product.featured_image | product_img_url: 'original' }}">
+      <span class="tasticon-fancy"></span>
+    </a>{% endcomment %}
+
+  {% endif %}
+{% comment %}
+  <a target="_blank" href="//plus.google.com/share?url={{ permalinkURL }}">
+    <span class="tasticon-googleplus"></span>
+  </a>
+{% endcomment %}
+</div>

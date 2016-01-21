@@ -1,0 +1,48 @@
+<span class="wine-stain top"></span>
+<span class="wine-stain left"></span>
+
+<div class="account-alert">
+  <h3></h3>
+</div>
+
+<div class="account-main-wrap">
+  <h1 class="page-title">Account overview</h1>
+
+  {% include 'account-nav' %}
+
+  <div class="account-overview clearfix subscription-manager"> 
+
+    <h2>Renew subscription</h2>
+    <div class="half-wrap">
+      <div class="subs-img-wrap">
+        <img data-subscription-product-image>
+      </div>
+    </div>
+    <div class="half-wrap last">
+      <div class="subs-info-wrap">
+        <h3 data-subscription-product-title></h3>
+        <p class="price"><span class="money" data-subscription-amount></span> every <em data-subscription-term></em></p>
+        <p class="payment-info">Your first payment will be taken at your next renew date or immediately if the renew date has already passed</p>
+        <p><span>We will take the payment from your saved payment details.</span></p>
+        <div class="payment-wrap">
+          <div class="card-wrap">
+            <img data-subscription-card-type />
+          </div>
+          <p>
+            <em data-subscription-card-number></em><br/>
+            Expires on <em data-subscription-card-expiry></em><br/>
+            <a data-subscription-url href="?view=edit-payment">Change payment details</a>
+          </p>
+        </div>
+        <form class="subscription-form" action="renew-subscription">
+          <input type="hidden" name="subscription">
+          <input type="hidden" name="product">
+          <input type="hidden" name="term">
+          <input type="hidden" name="new_date">
+          
+          <button type="submit">Confirm payment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

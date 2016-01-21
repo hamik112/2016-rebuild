@@ -1,0 +1,92 @@
+<div class="home-slideshow-wrapper {{ settings.slideshow-layout }} {{ settings.slideshow-transition }}">
+
+  <div class="home-slideshow-loader"></div>
+
+  {% assign slideCount = 0 %}
+  {% if settings.show-slide-1 %}{% assign slideCount = slideCount | plus: 1 %}{% endif %}
+  {% if settings.show-slide-2 %}{% assign slideCount = slideCount | plus: 1 %}{% endif %}
+  {% if settings.show-slide-3 %}{% assign slideCount = slideCount | plus: 1 %}{% endif %}
+  {% if settings.show-slide-4 %}{% assign slideCount = slideCount | plus: 1 %}{% endif %}
+  {% if settings.show-slide-5 %}{% assign slideCount = slideCount | plus: 1 %}{% endif %}
+
+  {% if settings.show-slideshow-navigation and slideCount > 1 %}
+    <div class="home-slideshow-navigation home-slideshow-previous icon"><span class="tasticon-prev"></span></div>
+    <div class="home-slideshow-navigation home-slideshow-next icon"><span class="tasticon-next"></span></div>
+  {% endif %}
+
+  {% if settings.show-slideshow-pagination and slideCount > 1 %}
+  <div class="home-slideshow-pagination home-slideshow-a-pagination">
+    {% if settings.show-slide-1 %}<span data-slide-id="home-slide-1" class="pagination-slide-1"><span></span></span>{% endif %}
+    {% if settings.show-slide-2 %}<span data-slide-id="home-slide-2" class="pagination-slide-2"><span></span></span>{% endif %}
+    {% if settings.show-slide-3 %}<span data-slide-id="home-slide-3" class="pagination-slide-3"><span></span></span>{% endif %}
+    {% if settings.show-slide-4 %}<span data-slide-id="home-slide-4" class="pagination-slide-4"><span></span></span>{% endif %}
+    {% if settings.show-slide-5 %}<span data-slide-id="home-slide-5" class="pagination-slide-5"><span></span></span>{% endif %}
+  </div>
+  {% endif %}
+
+  <div id="home-slideshow" class="home-slideshow">
+
+    {% if settings.show-slide-1 %}
+      <div id="home-slide-1" class="home-slide home-slide-1 text-aligned-left" {% if settings.slideshow-layout == 'opening-screen' %}style="background-image: url({{ 'slide-1-image.jpg' | asset_url }});"{% endif %}>
+
+        {% if settings.slide-1-cta.size == 0 and settings.slide-1-url.size > 0 %}<a href="{{settings.slide-1-url}}">{% endif %}
+        <div class="slide-image" style="background:url('{{ 'slide-1-image.jpg' | asset_url }}');"></div>
+        {% if settings.slide-1-cta.size == 0 and settings.slide-1-url.size > 0 %}</a>{% endif %}
+
+        {% if settings.slide-1-title.size > 0 or settings.slide-1-subtitle.size > 0 or settings.slide-1-small-text.size > 0 or settings.slide-1-cta.size > 0 %}
+          {% if settings.slide-1-cta.size == 0 and settings.slide-1-url.size > 0 %}<a href="{{settings.slide-1-url}}">{% endif %}
+          <div class="slide-text {% if settings.slide-1-shadows %}slide-text-use-shadows{% endif %}">
+            <!-- <span class="tasticon-pointer"></span> -->
+            {% if settings.slide-1-title.size > 0 %}
+              <h2 class="desktop-text">{{ settings.slide-1-title }}</h2>
+              <h2 class="mobile-text">{{ settings.slide-1-title }}</h2>
+            {% endif %}
+            
+            {% if settings.slide-1-subtitle.size > 0 %}
+            <h3><span class="desktop-text">{{ settings.slide-1-subtitle }} for just £20.</span></h3> 
+            {% endif %}
+            
+            <ul class="home-slide-bullets">
+              {% if settings.slide-1-bullet-1.size > 0 %}
+                <li>{{ settings.slide-1-bullet-1 }}</li>
+              {% endif %}
+
+              {% if settings.slide-1-bullet-2.size > 0 %}
+                <li>{{ settings.slide-1-bullet-2 }}</li>
+              {% endif %}
+
+              {% if settings.slide-1-bullet-3.size > 0 %}
+                <li>{{ settings.slide-1-bullet-3 }}</li>
+              {% endif %}
+
+              {% if settings.slide-1-bullet-4.size > 0 %}
+                <li>{{ settings.slide-1-bullet-4 }}</li>
+              {% endif %}
+    		</ul>
+            
+            {% if settings.slide-1-mobile-text-1.size > 0 %}
+            <!-- class="slide-text-mobile" -->
+              <h3 class="small-text">{{ settings.slide-1-mobile-text-1 }}</h3>
+            {% endif %}
+            
+            {% if settings.slide-1-mobile-text-2.size > 0 %}
+              <h3 id="slide-text-mobile-2" class="slide-text-mobile">{{ settings.slide-1-mobile-text-2 }}</h3>
+            {% endif %}
+
+            {% if settings.slide-1-cta.size > 0 and settings.slide-1-url.size > 0 %}
+              <a class="button" href="{{ settings.slide-1-url }}">{{ settings.slide-1-cta }}</a>
+            {% endif %}
+            
+            {% if settings.slide-1-small-text.size > 0 %}
+              <p>{{ settings.slide-1-small-text }}</p>
+            {% endif %}
+            
+          </div>
+          {% if settings.slide-1-cta.size == 0 and settings.slide-1-url.size > 0 %}</a>{% endif %}
+        {% endif %}
+
+      </div>
+    {% endif %}
+
+  </div>
+</div>

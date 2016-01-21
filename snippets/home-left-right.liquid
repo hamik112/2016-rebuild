@@ -1,0 +1,210 @@
+<div id="home-left-right" class="home-module-wrapper {{ settings.home-left-right-style }} {% if settings.home-left-right-borders %}borders{% endif %}">
+  <div class="home-module home-left-right-features">
+    {% if settings.home-left-right-heading.size > 0 %}
+      <h3 class="section-title"><span class="tasticon-headarrow-l"></span>{{ settings.home-left-right-heading }}</h3>
+    {% else %}
+      {% unless settings.home-show-left-right-1 or settings.home-show-left-right-2 or settings.home-show-left-right-3 or settings.home-show-left-right-4 %}
+        <h3 class="section-title">{{ 'onboarding.alternating_features_section.section_title' | t }}</h3>
+      {% endunless %}
+    {% endif %}
+
+    <div class="fix-for-first-child">
+
+    {% if settings.home-show-left-right-1 %}
+    <div class="home-left-right-feature clearfix media-aligned-{{settings.home-left-right-1-media-alignment}}">
+
+      <div class="home-left-right-content">
+        
+        <div class="home-left-right-text {{ settings.home-left-right-1-media-alignment }}">
+          {% if settings.home-left-right-1-title.size > 0 %}
+            <h2>{{ settings.home-left-right-1-title }}</h2>
+            <h3>{{ settings.home-left-right-1-title-2 }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.home-left-right-1-text }}
+          </div>
+        </div>
+        
+        <div class="home-left-right-media {{ settings.home-left-right-1-media-alignment }}">
+          {% if settings.home-left-right-1-media == 'image' %}
+          <img class="home-left-right-side-image" alt="{{ settings.home-left-right-1-title | strip_html | escape }}" src="{{ 'home-left-right-image-1.png' | asset_url }}">
+          {% elsif settings.home-left-right-1-media == 'slideshow' %}
+          <div class="home-slideshow-wrapper">
+            <div id="testy" class="home-slideshow-loader"></div>
+            <div class="home-slideshow-navigation home-slideshow-previous icon">&#57352;</div>
+            <div class="home-slideshow-navigation home-slideshow-next icon">&#57353;</div>
+            <div class="home-slideshow-pagination home-slideshow-b-pagination">
+              {% for product in collections.frontpage.products limit:4 %}
+              <span data-slide-id="home-slide-b-{{ forloop.index }}" class="pagination-slide-{{ forloop.index }}"><span></span></span>
+              {% endfor %}
+            </div>
+            <div id="home-slideshow-b" class="home-slideshow">
+              {% for product in collections.frontpage.products limit:4 %}
+              <div id="home-slide-b-{{ forloop.index }}" class="home-slide home-slide-b-{{ forloop.index }}" style="background-image: url('');"}>
+                <a href="{{ product.url | within: collections.frontpage }}" title="{{ product.title }}">
+                  <img class="slide-image" alt="{{ product.title | escape }}" src="{{ product.images.first | product_img_url: 'medium' }}">
+                </a>
+                {% if product.metafields['Where']['Where'] %}
+                <span><p>{{ product.metafields['Where']['Where'] }}</p></span>
+                {% endif %}
+              </div>
+              {% else %}
+              <img class="product-no-images" src="{{ 'no-image.svg' | asset_url }}" alt="No Image Available" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;" />
+              {% endfor %}
+            </div>
+          </div>
+          {% elsif settings.home-left-right-1-media == 'video' %}
+          <div class="home-left-right-video">{{ settings.home-left-right-1-video }}</div>
+          {% endif %}
+        </div>
+
+        <div class="home-left-right-button {{ settings.home-left-right-1-media-alignment }}">
+            {% if settings.home-left-right-1-url.size > 0 and settings.home-left-right-1-cta.size > 0 %}
+            <p class="home-left-right-cta"><a class="button" href="{{ settings.home-left-right-1-url }}">{{ settings.home-left-right-1-cta }}</a></p>
+            {% endif %}
+        </div>
+          
+      </div>
+        
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-left-right-2 %}
+    <div class="home-left-right-feature clearfix media-aligned-{{settings.home-left-right-2-media-alignment}}">
+
+      <div class="home-left-right-content">
+
+        <div class="home-left-right-text {{ settings.home-left-right-2-media-alignment }}">
+          {% if settings.home-left-right-2-title.size > 0 %}
+            <h2>{{ settings.home-left-right-2-title }}</h2>
+            <h3>{{ settings.home-left-right-2-title-2 }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.home-left-right-2-text }}
+          </div>
+        </div>
+
+        <div class="home-left-right-media {{ settings.home-left-right-2-media-alignment }}">
+          {% if settings.home-left-right-2-media == 'image' %}
+          <img class="home-left-right-side-image" alt="{{ settings.home-left-right-2-title | strip_html | escape }}" src="{{ 'home-left-right-image-2.png' | asset_url }}">
+          {% elsif settings.home-left-right-2-media == 'video' %}
+          <div class="home-left-right-video">{{ settings.home-left-right-2-video }}</div>
+          {% endif %}
+        </div>
+        
+		<div class="home-left-right-button {{ settings.home-left-right-2-media-alignment }}">
+            {% if settings.home-left-right-2-url.size > 0 and settings.home-left-right-2-cta.size > 0 %}
+            <p class="home-left-right-cta"><a class="button" href="{{ settings.home-left-right-2-url }}">{{ settings.home-left-right-2-cta }}</a></p>
+            {% endif %}
+        </div>
+        
+      </div>
+      
+    </div>
+    {% endif %}
+
+    {% if settings.home-show-left-right-3 %}
+    <div class="home-left-right-feature clearfix media-aligned-{{settings.home-left-right-3-media-alignment}}">
+
+      <div class="home-left-right-content">
+
+        <div class="home-left-right-text {{ settings.home-left-right-3-media-alignment }}">
+          {% if settings.home-left-right-3-title.size > 0 %}
+            <h2>{{ settings.home-left-right-3-title }}</h2>
+            <h3>{{ settings.home-left-right-3-title-2 }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.home-left-right-3-text }}
+          </div>
+        </div>
+
+        <div class="home-left-right-media {{ settings.home-left-right-3-media-alignment }}">
+          {% if settings.home-left-right-3-media == 'image' %}
+          <img class="home-left-right-side-image" alt="{{ settings.home-left-right-3-title | strip_html | escape }}" src="{{ 'home-left-right-image-3.png' | asset_url }}">
+          {% elsif settings.home-left-right-3-media == 'video' %}
+          <div class="home-left-right-video">{{ settings.home-left-right-3-video }}</div>
+          {% endif %}
+        </div>
+
+        <div class="home-left-right-button {{ settings.home-left-right-3-media-alignment }}">
+            {% if settings.home-left-right-3-url.size > 0 and settings.home-left-right-3-cta.size > 0 %}
+            <p class="home-left-right-cta"><a class="button" href="{{ settings.home-left-right-3-url }}">{{ settings.home-left-right-3-cta }}</a></p>
+            {% endif %}
+        </div>
+        
+      </div>
+        
+    </div>
+    {% endif %}
+      
+    {% if settings.home-show-left-right-4 %}
+    <div class="home-left-right-feature clearfix media-aligned-{{settings.home-left-right-4-media-alignment}}">
+
+      <div class="home-left-right-content {{ settings.home-left-right-4-media-alignment }}">
+
+        <div class="home-left-right-text">
+          {% if settings.home-left-right-4-title.size > 0 %}
+            <h2>{{ settings.home-left-right-4-title }}</h2>
+            <h3>{{ settings.home-left-right-4-title-2 }}</h3>
+          {% endif %}
+          <div class="rte">
+            {{ settings.home-left-right-4-text }}
+          </div>
+        </div>
+
+        <div class="home-left-right-media {{ settings.home-left-right-4-media-alignment }}">
+          {% if settings.home-left-right-4-media == 'image' %}
+          <img class="home-left-right-side-image" alt="{{ settings.home-left-right-4-title | strip_html | escape }}" src="{{ 'home-left-right-image-4.png' | asset_url }}">
+          {% elsif settings.home-left-right-4-media == 'video' %}
+          <div class="home-left-right-video">{{ settings.home-left-right-4-video }}</div>
+          {% endif %}
+        </div>
+       
+        <div class="home-left-right-button {{ settings.home-left-right-4-media-alignment }}">
+            {% if settings.home-left-right-4-url.size > 0 and settings.home-left-right-4-cta.size > 0 %}
+            <p class="home-left-right-cta"><a class="button" href="{{ settings.home-left-right-4-url }}">{{ settings.home-left-right-4-cta }}</a></p>
+            {% endif %}
+        </div>
+        
+      </div>
+        
+    </div>
+    {% endif %}
+
+    {% unless settings.home-show-left-right-1 or settings.home-show-left-right-2 or settings.home-show-left-right-3 or settings.home-show-left-right-4 %}
+      <div class="home-left-right-feature clearfix media-aligned-right">
+
+        <div class="home-left-right-text">
+          <h3>{{ 'onboarding.alternating_features_section.feature_title' | t }}</h3>
+          <div class="rte">
+            {{ 'onboarding.alternating_features_section.text' | t }}
+            <p class="home-left-right-cta"><a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t }}</a></p>
+          </div>
+        </div>
+
+        <div class="home-left-right-media">
+          <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+        </div>
+
+      </div>
+
+      <div class="home-left-right-feature clearfix media-aligned-left">
+
+        <div class="home-left-right-media">
+          <img class="home-helper-image" alt="" src="{{ 'no-image.svg' | asset_url }}" onerror="this.src='{{'no-image.png' | asset_url}}';this.onerror=null;">
+        </div>
+
+        <div class="home-left-right-text">
+          <h3>{{ 'onboarding.alternating_features_section.feature_title' | t }}</h3>
+          <div class="rte">
+            {{ 'onboarding.alternating_features_section.text' | t }}
+            <p class="home-left-right-cta"><a href="{{ shop.url }}/admin/themes">{{ 'onboarding.theme_settings_link' | t }}</a></p>
+          </div>
+        </div>
+
+      </div>
+    {% endunless %}
+
+    </div>
+  </div>
+</div>

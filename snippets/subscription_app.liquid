@@ -1,0 +1,9 @@
+<script>
+  var SubscriptionApp = {
+    url: 'https://taste4.appira.com',
+    testUrl: 'https://test-taste4.appira.com',
+    customer: '{{customer.id}}',
+    shop: '{{shop.permanent_domain}}'
+  };
+</script>
+{{ 'subscription-app.js'  | asset_url | script_tag }}

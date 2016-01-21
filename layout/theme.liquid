@@ -1,0 +1,202 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie10 lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie10 lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 lt-ie10 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+<script type='text/javascript'>
+(function (d, t) {
+  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+  bh.type = 'text/javascript';
+  bh.src = '//www.bugherd.com/sidebarv2.js?apikey=p68b31ed9kul71z13f1irw';
+  s.parentNode.insertBefore(bh, s);
+  })(document, 'script');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  {% if template == 'index' %}
+    <title>{{ shop.name }} | {{ page_title }}</title>
+  {% elsif template == '404' %}
+    <title>Page Not Found | {{ shop.name }}</title>
+  {% else %}
+    <title>{{ page_title }} | {{ shop.name }}</title>
+  {% endif %}
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}" />
+  {% endif %}
+  
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="57x57" href="{{ 'webapp_57.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="60x60" href="{{ 'webapp_60.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ 'webapp_72.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="76x76" href="{{ 'webapp_76.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ 'webapp_114.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="120x120" href="{{ 'webapp_120.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="144x144" href="{{ 'webapp_144.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="152x152" href="{{ 'webapp_152.png' | asset_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'webapp_180.png' | asset_url }}">
+  <link rel="icon" type="image/png" href="{{ 'favicon_32.png' | asset_url }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ 'webapp_192.png' | asset_url }}" sizes="192x192">
+  <link rel="icon" type="image/png" href="{{ 'favicon_96.png' | asset_url }}" sizes="96x96">
+  <link rel="icon" type="image/png" href="{{ 'favicon_16.png' | asset_url }}" sizes="16x16">
+  <link rel="mask-icon" href="{{ 'safari-pinned-tab.svg ' | asset_url }}" color="#82567c">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="canonical" href="{{ canonical_url }}" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  {{ content_for_header }}
+
+  {% include 'social-meta' %}
+
+  {% include 'fonts' %}
+  
+  <!-- Theme CSS -->
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+  
+  <!-- Custom CSS -->
+  {{ 'jquery.fancybox.css' | asset_url | stylesheet_tag }}
+  {{ 'inspira-styles.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'inspira-media.scss.css' | asset_url | stylesheet_tag }}
+
+  <!-- Third Party JS Libraries -->
+  {{ 'modernizr-2.7.1.min.js' | asset_url | script_tag }}
+  
+  <!-- Store object -->
+  {% include 'theme-options' %}
+
+  <style type="text/css">
+    {% assign hex2rgb_hex = settings.primary-button-background %}
+    {% include 'hex2rgb' %}
+    .add-to-cart-loader, .home-slideshow-loader, .product-slideshow-loader {
+      border-left:   3px solid rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .15);
+      border-right:  3px solid rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .15);
+      border-bottom: 3px solid rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .15);
+      border-top:    3px solid rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .8);
+    }
+    {% assign hex2rgb_hex = settings.primary-button-color %}
+    {% include 'hex2rgb' %}
+    .header-drawer h1, .header-drawer .navigation .primary ul {
+      border-color: {{settings.primary-button-color}};
+      border-color: rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .3);
+    }
+    {% assign hex2rgb_hex = settings.footer-accent-color %}
+    {% include 'hex2rgb' %}
+    .copyright, .payment-options {
+      color: rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .5);
+    }
+    .spread-the-word .footer-share-icon {
+      background: rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .7);
+    }
+    .spread-the-word .footer-share-icon:hover {
+      background: rgba({{ hex2rgb_r }}, {{ hex2rgb_g }}, {{ hex2rgb_b }}, .9);
+    }
+
+    {% if settings.custom-css != blank %}
+      {{ settings.custom-css }}
+    {% endif %}
+  </style>
+  
+{% comment %}
+ <script src="https://use.typekit.net/kfk7bdc.js"></script>
+ <script>try{Typekit.load({ async: true });}catch(e){}</script>
+{% endcomment %} 
+  <script>
+  (function(d) {
+    var config = {
+      kitId: 'kfk7bdc',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
+
+  
+  <!-- Scripts -->
+  {{ 'jquery-1.10.0.min.js' | asset_url | script_tag }}
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+  
+  <!-- START Rakuten Marketing Tracking -->
+  <script type="text/javascript" src="//intljs.rmtag.com/111747.ct.js"></script>
+  <!-- END Rakuten Marketing Tracking -->
+  
+</head>
+
+<body class="{% if customer %}customer-logged-in{% endif %} template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {% if template == 'page.subscription-collection' %}subscription-collection{% endif %} navigation-{{ settings.header-navigation-location }} {% if template == 'product.slideshow' %}template-product-slideshow{% endif %}" >
+  
+  <!-- Google Tag Manager -->
+  <noscript>
+    <iframe src="//www.googletagmanager.com/ns.html?id=GTM-PBBPG5"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PBBPG5');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  {% include 'voucher-alert' %}
+  {% include 'header' %}
+
+  <main class="main-content {% if template contains 'collection' and collection.image and settings.collection-show-featured-image %}{% unless template contains 'list-collections' %}collection-has-featured-image{% endunless %}{% endif %}{% if template == 'page.subscription-collection'%}collection-has-featured-image{% endif %}" role="main">
+
+    {% unless template contains 'index' or fullBleed or template contains 'collection' or template == 'cart' or template contains 'customers' %}
+      {% unless template contains 'slideshow' and settings.product-slideshow-layout == 'full-width' %}
+        {% include 'breadcrumbs' %}
+      {% endunless %}
+    {% endunless %}
+
+    {{ content_for_layout }}
+  </main>
+
+  {% include 'footer' %}
+
+  {% if template contains 'cart' %}
+
+    {% if settings.show-shipping-calculator %}
+      {{ "http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" | script_tag }}
+      {{ "/services/javascripts/countries.js" | script_tag }}
+      {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+    {% endif %}
+
+    {{ 'jquery.cart.min.js' | asset_url | script_tag }}
+  {% endif %}
+
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {% if settings.show-currency-switcher %}
+    {{ "//cdn.shopify.com/s/javascripts/currencies.js" | script_tag }}
+    {{ "jquery.currencies.js" | asset_url | script_tag }}
+  {% endif %}
+
+  {{ 'option_selection.js' | shopify_asset_url | script_tag }}
+  
+  {% if template contains 'change-delivery' %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  {% endif %}
+
+  {{ 'plugins.js'  | asset_url | script_tag }}
+  {{ 'jquery.fancybox.pack.js' | asset_url | script_tag }}
+  {{ 'site.js'  | asset_url | script_tag }}
+  
+  <!-- Custom JS -->
+  {% if customer %}{% include 'subscription_app' %}{% endif %}
+  {{ 'inspira-script.js' | asset_url | script_tag }}
+
+<!-- BEEKETINGSCRIPT CODE START -->{% include 'bk-tracking' %}<!-- BEEKETINGSCRIPT CODE END -->
+
+{% include 'taste4-chat' %}
+
+</body>
+</html>

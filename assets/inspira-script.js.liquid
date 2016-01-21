@@ -1,0 +1,500 @@
+/*!****************************************************************************************
+
+                 _                      _             
+                (_) _ __   ____  _ _   (_) _ __  __ _ 
+                | |( '_ '\/ ,__)( '_'\ | |( '__)/'_' )
+                | || | ) )\__, \| (_) )| || |  ( (_| |
+                (_)(_) (_)(____/|  __/ (_)(_)   \__,_)
+                                | |                   
+                                (_)                   
+
+                             November 2015 
+
+*******************************************************************************************/
+
+if(typeof inspira === 'undefined'){
+  var inspira = {};
+}
+
+(function(){
+  
+  inspira.fix_home = {};
+  inspira.fix_home._init = function(div){
+    if($(window).width() < 720){
+      $('.home-in-line-text').css('height','auto');
+      return false;
+    }
+    div.each(function(){
+      $(this).find('.home-in-line-text').css('height','auto');
+      var h =0;
+      $(this).find('.home-in-line-text').each(function(){
+        if($(this).outerHeight()>h){
+          h = $(this).outerHeight();
+        }
+      });
+      $(this).find('.home-in-line-text').css('height',h);
+    });
+  }
+  
+  inspira.get_voucher = {};
+  inspira.get_voucher._init = function(el){
+    if(window.location.search.indexOf('utm_campaign') > 0 &&
+       window.location.search.indexOf('utm_content') > 0){
+      var voucher,
+          discount,
+          arr = window.location.search.split('&');
+      
+      for(var i=0;i<arr.length;i++){
+        if(arr[i].indexOf('utm_content=') >= 0){
+          voucher = arr[i].replace('utm_content=','');
+        }else if(arr[i].indexOf('utm_campaign=') >= 0){
+          var d = arr[i].replace('utm_campaign=','').split('-');
+          discount = d[0];
+        }
+      }
+      
+      el.find('#voucher-code').text(voucher);
+      var long = discount.length > 2 ? 'class="disc-l"' : '';
+      $('#home-slide-1 .slide-text h3').remove();
+      $('#home-slide-1 .slide-text h2').before("<span class='voucher-icon'><span "+ long +">£"+discount+"</span>off</span>");
+      $('#home-slide-1 .slide-text h2').text('Thanks');
+      $('#home-slide-1 .slide-text h2').after("<h3>You've just received £"+discount+" off your first subscription.</h3>");
+      $('#home-slide-1 .slide-text p').html("4 handpicked wines delivered FREE every 4 weeks.<br>Save £"+discount+" on your first order!");
+      $('#voucher-badge').text(discount);
+      $('body').addClass('show-voucher');
+
+      el.find('.close-me').click(function(){
+        $('body').removeClass('show-voucher');
+      });
+
+      $.cookie('voucher', voucher, { expires: 365, path: '/' });
+    }
+  }
+  
+  inspira.get_booklet = {};
+  inspira.get_booklet._init = function(callback){
+    $.getJSON('/products/taste4-welcome-booklet',function(data){
+      return callback(data);
+    });
+  }
+  
+  inspira.add_booklet_permalink = {};
+  inspira.add_booklet_permalink._init = function(booklet){
+    $('#subscriptions-collection .permalink').click(function(e){
+        e.preventDefault();
+        var $this = $(this);
+        var items = [ { quantity:1, id: $(this).data('id') },
+          			  { quantity:1, id: booklet.product.variants[0].id }
+                    ];
+        
+        inspira.add_items._init(items, function() {
+           document.location.href = '/cart';
+        });
+    });
+  }
+  
+  inspira.change_permalinks = {};
+  inspira.change_permalinks._init = function(booklet){
+    $('#subscriptions-collection .permalink').each(function(){
+      var href = '/account/register?permalink=' + $(this).attr('href') + ',' + booklet.product.variants[0].id + ':1['+$(this).data('title')+']';
+      $(this).attr('href',href);
+    });
+  }
+  
+  inspira.add_items = {};
+  inspira.add_items._init = function(items, callback){
+    if(!items.length) {
+      if(typeof callback === 'function') callback();
+      return;
+    }
+    $.ajax('/cart/add.js', {
+      type:'POST',
+      dataType: 'json',
+      data: items[0]
+    })
+    .done(function(data) {
+      items = items.slice(1);
+      inspira.add_items._init(items, callback)
+    })
+    .fail(function(a,b,c) {
+      alert('error');
+      console.log(a);console.log(b);console.log(c);
+    });
+  }
+  
+  inspira.subscription_product = {};
+  inspira.subscription_product._init = function(booklet){
+    var items = [ { id: booklet.product.variants[0].id, quantity: 1 },
+      			  { id: $('.product-form-subs').find('.product-select').val(), quantity: 1 } ];
+    
+    $('.product-form-subs').submit(function(e){
+      e.preventDefault();
+      $(".add-to-cart").addClass("loading");
+      inspira.add_items._init(items, function() {
+        document.location.href = '/cart';
+      });
+    });
+
+  }
+
+  inspira.product_description = {};
+  inspira.product_description._init = function(desc){
+    desc.find('#read-full-txt').click(function(e){
+      e.preventDefault();
+      desc.find('.init-text').hide();
+      desc.find('.full-text').slideToggle();
+    });
+    desc.find('#read-less-txt').click(function(e){
+      e.preventDefault();
+      desc.find('.full-text').hide();
+      desc.find('.init-text').slideToggle();
+    });
+  }
+
+  inspira.cart_fix = {};
+  inspira.cart_fix._init = function(submit){
+//    console.log("test");
+    //if(parseInt(submit.data('nonsub')) % 4 === 0){
+      submit.removeClass('disabled');
+      $('.template-cart p.non-subscription-message').fadeOut();
+    /*}else{
+      if(!submit.hasClass('disabled')){
+        submit.addClass('disabled');
+        $('.template-cart p.non-subscription-message:hidden').fadeIn();
+      }
+    }*/
+    submit.click(function(e){
+      if (submit.hasClass('disabled')){
+        e.preventDefault();
+        return false;
+      }else{
+        if($('.cart-instructions textarea').val().trim() == ''){
+          e.preventDefault();
+          $('.cart-instructions').addClass('required-alert');
+          alert('Delivery instructions are required!');
+          return false;
+        }else if($('.template-cart form[action="/cart"]').hasClass('not-allowed')){
+          e.preventDefault();
+          document.location.href = '/account/register?not-allowed=true';
+        }else{
+          if($.cookie('voucher')){
+            inspira.checkout_permalink._init();
+          }else{
+            return true;
+          }
+        }
+      }
+    });
+  }
+  
+  inspira.cart_fix_nonsub = {};
+  inspira.cart_fix_nonsub._init = function(item_q){
+    item_q.change(function(){
+      if(!$(this).parents('.cart-item').find('.cart-item-product-wrap').hasClass('subscription-item')){
+        if(!$(this).hasClass('is-booklet')){
+          var non_sub = 0;
+          $('.cart-item-product-wrap:not(.subscription-item)').each(function(){
+            if(!$(this).parents('tr').find('.cart-item-quantity-display').hasClass('is-booklet')){
+              non_sub += parseInt($(this).parents('tr').find('.cart-item-quantity-display').val());
+            }
+          });
+          $('.template-cart .cart-checkout, .template-cart input[name="checkout"]').data('nonsub',non_sub);
+          inspira.cart_fix._init($('.template-cart .cart-checkout, .template-cart input[name="checkout"]'));
+        }
+      }
+    });
+  }
+  
+  inspira.check_booklets = {};
+  inspira.check_booklets._init = function(q,d){
+    if(parseInt(q) != parseInt(d)){
+      var n = parseInt(q) - parseInt(d); 
+      var o = parseInt($('.cart-item .cart-item-quantity-display.is-booklet').val());
+      var r = o+n;
+      $('.cart-item .cart-item-quantity-display.is-booklet').val(r).trigger('change');
+      $('.cart-item .cart-item-quantity-display.is-booklet').data('val',r);
+      $('.cart-item .fake-qty').text(r);
+    }
+  }
+  
+  inspira.checkout_permalink = {};
+  inspira.checkout_permalink._init = function(){
+    $.ajax({
+      dataType: "json",
+      url: '/cart',
+      success: function(data){
+        var permalink = '/cart/';
+        for(var i=0;i<data.items.length;i++){
+          permalink += data.items[i].id + ':' + data.items[i].quantity;
+          if(i + 1 == data.items.length){
+            permalink += '?note=' + data.note + '&discount=' + $.cookie('voucher');
+          }else{
+            permalink += ',';
+          }
+        }
+        $.removeCookie('voucher');
+        document.location.href = permalink;
+      }
+    });
+  }
+  
+  inspira.account_alert = {};
+  inspira.account_alert._init = function(){
+    if(window.location.search != ''){
+      var s = window.location.search;
+      if(s.indexOf('not-allowed=') > 0){
+        $('.account-alert p').html('Register or Log in to Checkout');
+        $('.account-alert').slideToggle();
+        $('#create_customer input[type="submit"],#customer_login input[type="submit"]').before('<input type="hidden" name="return_to" value="/cart?to_checkout=true">');
+      }
+    }
+  }
+  
+  inspira.address_manager = {};
+  inspira.address_manager._init = function(address,new_address){
+    var w = $(window).width() * 0.4;
+    address.find('.edit-address').each(function(){
+      var id = $(this).parents('.customer-address').data('address-id');
+      $(this).fancybox({
+        href: '#edit-' + id,
+        minWidth: w,
+        padding:45
+      });
+    });
+    new_address.fancybox({
+      href: '#new-address',
+      minWidth: w,
+      padding:45
+    });
+  }
+  
+  
+})(inspira);
+
+
+$(document).ready(function(){
+  
+  /***
+  * 
+  *  Make Home in-line section consistent height
+  *
+  ***/
+  if($('.template-index').length){
+    inspira.fix_home._init($('.home-in-line-features'));
+    inspira.get_voucher._init($('.voucher-alert'));
+  }
+  
+  /***
+  * 
+  *  Add booklet + subscription to cart on subscription collection page
+  *
+  ***/
+  if($('#subscriptions-collection').length){
+    inspira.get_booklet._init(inspira.add_booklet_permalink._init);
+  }
+  
+  /***
+  * 
+  *  Add booklet + subscription to cart on subscription product page
+  *
+  ***/
+  if($('.product-form-subs').length){
+    inspira.get_booklet._init(inspira.subscription_product._init);
+  }
+
+  /***
+  *
+  * Set FRED voucher if none
+  *
+  ***/
+  //if (document.cookie.indexOf("voucher") >= 0) {
+  if($.cookie('voucher')){
+  //  console.log("already set");
+  }else{
+    // set a new cookie
+    //expiry = new Date();
+    //expiry.setTime(expiry.getTime()+(60*60*1000)); //1 hour
+    //document.cookie = "voucher=FRED; expires=" + expiry.toGMTString();
+  //     $.cookie('voucher', 'FIRST CASE', { expires: 365, path: '/' });
+   // console.log("this is your first time");
+  }
+  
+  /***
+  *
+  * Products Collection Toggle on Sub page
+  *
+  ***/
+
+  /*
+  $( ".product-list-item-popout" ).on( "click", function(e) {
+    e.stopPropagation();
+    var clickedID = e.currentTarget.id;
+    console.log(clickedID);
+    $('.product-list-item-popout').each(function(){
+      if(clickedID == $(this).attr('id')){
+        $(this).parent().parent().addClass("show-case").removeClass("hidden-prod");
+      }else{
+        $(this).parent().parent().removeClass("show-case").addClass("hidden-prod");
+      }
+    });
+  });
+  $( ".close-button" ).on( "click", function(e) {
+    e.stopPropagation();
+    $('.product-list-item-popout').each(function(){
+      $(this).parent().parent().removeClass("show-case").removeClass("hidden-prod");
+    });
+  });
+  $("body").click(function(e){
+    if(e.target.className !== "product-list-item"){
+      $('.product-list-item-popout').each(function(){
+        $(this).parent().parent().removeClass("show-case").removeClass("hidden-prod");
+      });
+    }
+  });
+  */
+  
+  /***
+  *
+  * Sticky / Scroll Header
+  *
+  ***/
+  
+  //var lastScrollTop = 0;
+
+  /*$(document).scroll(function() {
+    if ($(document).scrollTop() >= 50) {
+      console.log("left top");
+      var st = $(this).scrollTop();
+      if (st > lastScrollTop){
+        console.log("downscroll");
+        $(".main-header-wrapper").addClass("sticky-header");
+      } else {
+        console.log("upscroll");
+        $(".main-header-wrapper").removeClass("sticky-header");
+      }
+      lastScrollTop = st;
+    } else {
+      console.log("in top");
+      $(".main-header-wrapper").removeClass("sticky-header");
+    }
+  });
+  */
+  
+  
+  /*****
+  *
+  * Checkout add minus
+  *
+  */
+  
+  /*
+  $(".cart-item-quantity-decrease").on("click", function(){
+  var quant = $(this).parent().find(".cart-item-quantity-display").val();
+	if(quant>0){
+       $(this).parent().find(".cart-item-quantity-display").val(parseInt(quant,10) - 1);
+	}
+	if(quant<1){
+      console.log('==0');
+      $(this).parent().find(".cart-item-quantity-decrease").addClass("minus-disabled");
+    }
+  });
+  $(".cart-item-quantity-incrase").on("click", function(){
+    var quant = $(this).parent().find(".cart-item-quantity-display").val();
+    $(this).parent().find(".cart-item-quantity-display").val(parseInt(quant,10) + 1);
+    $(this).parent().find(".cart-item-quantity-decrease").removeClass("minus-disabled");
+  });
+  
+  */
+  
+  /***
+  * 
+  *  Read More - Read less funcitonality on product page
+  *
+  ***/
+  if($('.product-form').length || $('.product-form-subs').length){
+    inspira.product_description._init($('.template-product .product-description'));
+  }
+
+  /***
+  * 
+  *  Cart Page Redirections and Functionality
+  *
+  ***/
+  if($('.template-cart').length){
+
+    /** -- Submit Cart form if redirected from registration/login page -- **/
+    if(window.location.search.indexOf('?to_checkout=true') == 0){
+      if($.cookie('voucher')){
+        /** -- Send to checkout with Voucher -- **/
+        inspira.checkout_permalink._init();
+      }else{
+        /** -- Send to checkout -- **/
+        document.location.href = '/checkout';
+      }
+    }else{
+    
+      /** -- Show cart page if not redirected -- **/
+      $('.template-cart .main-content').css('opacity','1');
+      
+      if($.cookie('voucher')){
+        $('#voucher-code').text($.cookie('voucher'));
+        $('body').addClass('show-voucher');
+      }
+
+      /** -- Check number of booklets in cart -- **/
+      //if(parseInt($('.cart-totals .button')
+      if(parseInt($('.cart-footer-right .button').data('subs')) != parseInt($('.cart-footer-right .button').data('booklets'))){
+        inspira.check_booklets._init($('.cart-footer-right .button').data('subs'),$('.cart-footer-right .button').data('booklets'));
+      }
+
+      /** -- Allow / Deny Checkout Access -- **/
+      inspira.cart_fix._init($('.template-cart .cart-checkout, .template-cart input[name="checkout"]'));
+
+      /** -- Add / Remove booklets on change Subscriptions Quantities -- **/
+      inspira.cart_fix_nonsub._init($('.template-cart .cart-item-quantity-display'));
+    }
+  }
+  
+  //Copied here so applies to all pages
+  if($.cookie('voucher')){
+    $('#voucher-code').text($.cookie('voucher'));
+    $('body').addClass('show-voucher');
+  }
+  
+  /***
+  * 
+  *  Registration and Login Page Alerts
+  *
+  ***/
+  if($('.template-customers-register').length || $('.template-customers-login').length){
+    inspira.account_alert._init();
+  }
+  
+  /***
+  * 
+  *  Account Section - Add and Edit Address Functionality Popups
+  *
+  ***/
+  if($('.template-customers-addresses').length){
+    inspira.address_manager._init($('.template-customers-addresses .customer-address'),$('.template-customers-addresses .add-new-address'));
+  }
+
+});
+
+$(window).load(function(){
+
+ 
+  
+});
+
+$(window).resize(function(){
+
+   /***
+  * 
+  *  Make Home in-line section consistent height
+  *
+  ***/
+  inspira.fix_home._init($('.home-in-line-features'));
+  
+});
+

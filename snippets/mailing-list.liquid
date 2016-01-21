@@ -1,0 +1,62 @@
+{% if template contains 'index' %}
+<div id="home-mailing-list" class="home-module-wrapper {{ settings.home-mailing-list-style }}" >
+  <div class="home-mailing-list-bg" style="background:url('{{ 'home-mailing-list-image.png' | asset_url  }}');" ></div>
+  {% endif %}
+  <div class="mailing-list-signup {% if template contains 'index' %}home-module{% endif %}">
+
+  {% if settings.mailing-list-blurb.size > 0 %}
+    <p>{{ settings.mailing-list-blurb }}</p>
+  {% endif %}
+
+  {% if settings.mailing-list-platform == 'mailchimp' or settings.mailing-list-platform == 'campaign-monitor' %}
+  <form action="{{ settings.mailing-list-action-url }}" method="post" name="{% if settings.mailing-list-platform == 'mailchimp' %}mc-embedded-subscribe-form{% endif %}" target="_blank">
+
+    {% if settings.mailing-list-platform == 'mailchimp' %}
+    <div class="mailing-list-email-wrapper">
+    	<input class="mailing-list-email" name="EMAIL" type="email" placeholder="{{ 'general.email_placeholder' | t }}" value="">
+    </div>
+    {% endif %}
+
+    {% if settings.mailing-list-platform == 'campaign-monitor' %}
+    <input id="fieldEmail" class="mailing-list-email" name="{{ settings.campaign-monitor-name }}" type="email" placeholder="{{ 'general.email_placeholder' | t }}" required />
+    {% endif %}
+
+    <div class="mailing-list-submit">
+      <span><input class="submit secondary" name="subscribe" type="submit" value="{{ 'general.subscribe' | t }}"></span>
+    </div>
+
+  </form>
+  {% else %}
+
+    <div class="home-mailing-list-feature">
+    {% form 'customer' %}
+      <div class="mailing-list-email-wrapper">
+        <input class="mailing-list-email" name="contact[email]" type="email" placeholder="enter your email address" value="">
+      </div>
+      <input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,newsletter"/>
+      <div class="mailing-list-submit">
+        <button class="submit secondary" name="subscribe" type="submit">{{ settings.mailing-list-title }}<i class="icon-mailing-list"></i></button>
+      </div>
+    {% endform %}
+    </div>
+
+    <div class="modal-wrapper modal-mailing-list">
+      <div class="modal">
+        {% if settings.mailing-list-modal-title == blank and settings.mailing-list-modal-description == blank and settings.mailing-list-modal-button-text == blank %}
+          <h3 class="section-title">{{ 'onboarding.mailing_list_modal.title' | t }}</h3>
+          <p>{{ 'onboarding.mailing_list_modal.description' | t }}</p>
+          <span class='button dismiss'>{{ 'onboarding.mailing_list_modal.button_text' | t }}</span>
+        {% else %}
+          <h3 class="section-title">{{ settings.mailing-list-modal-title }}</h3>
+          <p>{{ settings.mailing-list-modal-description }}</p>
+          <span class='button dismiss'>{{ settings.mailing-list-modal-button-text }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+  {% endif %}
+</div>
+
+{% if template contains 'index' %}
+</div>
+{% endif %}

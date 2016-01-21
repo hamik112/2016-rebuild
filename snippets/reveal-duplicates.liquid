@@ -1,0 +1,18 @@
+<script>
+  $.ajax('https://test-taste4.appira.com/ajax_find_duplicates', {
+    dataType: 'jsonp',
+    data: {
+      ajax: true,
+      customer: '{{customer.id}}',
+      shop: '{{shop.permanent_domain}}',
+      line_items: {{ cart.items | json }}
+    }
+  })
+  .done(function(duplicates) {
+    duplicates.forEach(function(duplicate) {
+      console.log('.cart-item[data-variant="'+duplicate.variant_id+'"] .subscription-info .alert-txt');
+      $('.cart-item[data-variant="'+duplicate.variant_id+'"] .subscription-info .alert-txt').show(200);
+    });
+  })
+  .fail(function(a,b,c) {console.log(a);console.log(b);console.log(c);});
+</script>
